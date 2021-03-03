@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!(await checkConnection())) await navigateTo(context, NoConnectionView.route);
 
     Timer(
-      Duration(milliseconds: 700),
+      Duration(milliseconds: 1000),
       () => Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           transitionDuration: Duration(milliseconds: 800),
@@ -61,9 +61,9 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Container(
                 constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height / 2),
                 child: Image.asset(
-                  kMenudLogoAsset,
-                  // height: 2 * MediaQuery.of(context).size.width / 3,
-                  // width: 2 * MediaQuery.of(context).size.width / 3,
+                  kZShipLogo,
+                  height: 2 * MediaQuery.of(context).size.width / 3,
+                  width: 2 * MediaQuery.of(context).size.width / 3,
                 ),
               ),
             ),

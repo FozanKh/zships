@@ -15,7 +15,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  // AuthService _auth = AuthService();
   final int delayAmount = 200;
 
   @override
@@ -29,7 +28,9 @@ class _LoginViewState extends State<LoginView> {
               child: Container(
                 constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.height / 2),
                 child: Image.asset(
-                  kMenudLogoAsset,
+                  kZShipLogo,
+                  height: 2 * MediaQuery.of(context).size.width / 3,
+                  width: 2 * MediaQuery.of(context).size.width / 3,
                 ),
               ),
             ),
