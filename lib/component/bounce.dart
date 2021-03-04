@@ -1,5 +1,3 @@
-library flutter_bounce;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -57,6 +55,7 @@ class BounceState extends State<Bounce> with SingleTickerProviderStateMixin {
           scale: _scale,
           child: widget.child,
         ));
+        
   }
 
   Future<void> _start(Duration duration) async {

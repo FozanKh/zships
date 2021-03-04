@@ -1,10 +1,8 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:zships/auth/model/user.dart';
 import 'package:zships/auth/services/auth_errors_handler.dart';
-import 'package:zships/globals.dart' as globals;
 import 'package:zships/service/database.dart';
 import 'package:zships/service/sharedPreferences.dart';
 
@@ -120,7 +118,7 @@ class AuthService {
   Future<String> authWithPhoneNumber(String phoneNumber, Function onCodeSent) async {
     var error;
 
-    log('Verfiying Phone Number');
+    log('Verifying Phone Number');
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       timeout: Duration(seconds: 60),
@@ -146,29 +144,6 @@ class AuthService {
   }
 
   // update user email
-
-  Future updateEmail(String currentEmail, String newEmail, String password) async {
-    try {
-      auth.UserCredential result =
-          await _auth.signInWithEmailAndPassword(email: currentEmail, password: password); //Check if email and password are correct
-
-      auth.User user = result.user;
-      var errors;
-      await user.updateEmail(newEmail).catchError((onError) {
-        errors = onError.code;
-      });
-
-      if (errors == null) {
-        DatabaseService.instance.editUserEmail(emailAdders: newEmail);
-        return ("emailUpdated");
-      } else {
-        return authErrorsHandler(errors);
-      }
-    } catch (e) {
-      return authErrorsHandler(e.code);
-    }
-  }
-
   Future updatePassword(String newPassword, String oldPassword, String email) async {
     try {
       var errors;
@@ -190,52 +165,6 @@ class AuthService {
       return authErrorsHandler(e.code);
     }
   }
-
-  Future updateName(String firstName, String lastName) async {
-    try {
-      var response;
-
-      DatabaseService.instance.editUserName(firstName: firstName, lastName: lastName).catchError((onError) {
-        response = onError.message;
-      });
-
-      return response;
-    } catch (e) {
-      return e.message;
-    }
-  }
-
-  Future updateGender(String gender) async {
-    try {
-      var response;
-      DatabaseService.instance.editGender(gender: gender).catchError((onError) {
-        response = onError.message;
-      });
-
-      return response;
-    } catch (e) {
-      return e.message;
-    }
-  }
-
-  // Future<String> getPhotoUrl() async {
-  //   auth.User user = _auth.currentUser;
-  //   String photoUrl;
-  //   if (user != null && user.uid != null && !user.isAnonymous) {
-  //     try {
-  //       StorageReference ref = FirebaseStorage.instance.ref().child("users").child(user.uid).child("profile-image");
-  //       photoUrl = await ref.getDownloadURL().catchError((onError) {
-  //         photoUrl = null;
-  //       });
-  //       return photoUrl;
-  //     } catch (e) {
-  //       return null;
-  //     }
-  //   } else {
-  //     return null;
-  //   }
-  // }
-  // sign out
 
   Future signOut() async {
     try {

@@ -1,8 +1,8 @@
-import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:zships/auth/model/user.dart';
 import 'package:zships/auth/services/auth.dart';
@@ -40,6 +40,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     setLocaleMessages('ar', ArMessages());
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: kTransparent,
+    ));
     super.initState();
   }
 
@@ -47,11 +51,6 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _locale = locale;
     });
-  }
-
-  test() async {
-    await Future.delayed(Duration(seconds: 4));
-    print('10 seconds passed');
   }
 
   @override
@@ -70,9 +69,9 @@ class _MyAppState extends State<MyApp> {
           GlobalCupertinoLocalizations.delegate
         ],
         theme: ThemeData(
-            scaffoldBackgroundColor: kBackground,
-            appBarTheme: AppBarTheme(brightness: Brightness.light, centerTitle: true, elevation: 0),
-            fontFamily: 'DinNext'),
+          scaffoldBackgroundColor: kBackground,
+          fontFamily: 'DinNext',
+        ),
         onGenerateRoute: Platform.isIOS ? Routes.cupertinoRoutes : Routes.materialRoutes,
         home: SplashScreen(),
       ),

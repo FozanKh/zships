@@ -3,7 +3,7 @@ import 'package:zships/auth/view/sign_in_view.dart';
 import 'package:zships/component/alertDialog.dart';
 import 'package:zships/component/animations/showUp.dart';
 import 'package:zships/component/progress_indicator.dart';
-import 'package:zships/component/rounded_textfield.dart';
+import 'package:zships/component/rounded_text_field.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/helper_methods.dart';
 import 'package:zships/core/wrapper.dart';

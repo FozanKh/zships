@@ -1,6 +1,4 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:zships/auth/model/user.dart';
-import 'package:zships/auth/services/auth.dart';
 import 'package:zships/auth/view/fill_user_info.dart';
 import 'package:zships/auth/view/phon_auth_view.dart';
 import 'package:zships/component/action_button.dart';
@@ -63,7 +61,7 @@ class _SettingViewState extends State<SettingView> {
           ],
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(30, 30, 30, 100),
+          padding: EdgeInsets.fromLTRB(20, 30, 20, 100),
           physics: BouncingScrollPhysics(),
           child: Column(
             children: <Widget>[
@@ -95,7 +93,7 @@ class _SettingViewState extends State<SettingView> {
               SettingCard(
                 title: getText(context, 'testApi'),
                 icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.testApi(),
+                onTap: () => ApiService.instance.createSampleShipment(),
               ),
               SettingCard(
                 title: getText(context, 'gettingShipments'),

@@ -44,7 +44,7 @@ import 'package:zships/localization/constants.dart';
 //   );
 // }
 
-modalBottomSheet(context, {@required Widget child, String title, bool locale = false}) {
+modalBottomSheet(context, {@required Widget child, String title, bool locale = false, bool fullHeight = false}) {
   showModalBottomSheet(
     isScrollControlled: true,
     elevation: 0,
@@ -55,6 +55,7 @@ modalBottomSheet(context, {@required Widget child, String title, bool locale = f
       decoration: BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(10)), color: kBackground),
       margin: EdgeInsets.only(top: kToolbarHeight + 10, bottom: MediaQuery.of(context).viewInsets.bottom),
       padding: EdgeInsets.symmetric(horizontal: 20),
+      height: fullHeight ? MediaQuery.of(context).size.height : null,
       child: Stack(
         children: [
           SingleChildScrollView(

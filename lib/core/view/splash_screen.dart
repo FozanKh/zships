@@ -6,8 +6,6 @@ import 'package:zships/constants/helper_methods.dart';
 import 'package:zships/constants/validate.dart';
 import 'package:zships/core/view/no_connection_view.dart';
 import 'package:zships/core/wrapper.dart';
-import 'package:zships/globals.dart';
-import 'package:zships/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 

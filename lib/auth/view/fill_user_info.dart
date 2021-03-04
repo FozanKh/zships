@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:zships/auth/model/user.dart';
 import 'package:zships/component/animations/showUp.dart';
 import 'package:zships/component/progress_indicator.dart';
-import 'package:zships/component/rounded_textfield.dart';
+import 'package:zships/component/rounded_text_field.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/helper_methods.dart';
 import 'package:zships/localization/constants.dart';
@@ -28,7 +28,7 @@ class _FillUserInfoView extends State<UpdateUserInfo> {
   String _username = "";
 
   bool validEmail = false;
-  bool validusername = false;
+  bool validUsername = false;
 
   final int delayAmount = 200;
 
@@ -67,12 +67,12 @@ class _FillUserInfoView extends State<UpdateUserInfo> {
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (value) {
                             _username = value;
-                            validusername = validateUsername(_username);
+                            validUsername = validateUsername(_username);
                             setState(() {});
                           },
                         ),
                         Visibility(
-                          visible: !validusername && _username.length > 1,
+                          visible: !validUsername && _username.length > 1,
                           child: ShowUp(
                             delay: delayAmount,
                             child: Padding(

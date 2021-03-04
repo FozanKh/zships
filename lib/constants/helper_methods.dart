@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zships/globals.dart';
 
 navigateTo(context, String route, {Map<String, dynamic> args}) async {
   return (await Navigator.pushNamed(context, route, arguments: args));
-  // return (await Navigator.push(context, MaterialPageRoute(builder: (context) => widget)));
 }
 
+  // return (await Navigator.push(context, MaterialPageRoute(builder: (context) => widget)));
 openPage(context, Widget widget, {Map<String, dynamic> args}) async {
   return (await Navigator.push(context, MaterialPageRoute(builder: (context) => widget)));
 }

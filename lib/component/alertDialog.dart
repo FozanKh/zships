@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zships/component/animations/bottom_slide_transition.dart';
-import 'package:zships/component/animations/bottom_slide_transition.dart';
 import 'package:zships/component/rounded_button.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/decorations.dart';

@@ -149,7 +149,6 @@ class _BodyState extends State<_Body> {
 
   @override
   void initState() {
-    // TODO: implement initState
     timeOut();
     super.initState();
   }

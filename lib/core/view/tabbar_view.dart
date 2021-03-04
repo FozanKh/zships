@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/globals.dart';
+import 'package:zships/home/component/home_fab.dart';
 import 'package:zships/home/view/home_view.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:zships/settings/view/setting_view.dart';
@@ -17,10 +17,7 @@ class TabBarScreen extends StatefulWidget {
 class _TabBarScreenState extends State<TabBarScreen> {
   List<Widget> _pages;
   Widget _homePage;
-  Widget _morePage;
-  Widget _cartPage;
-  Widget _myOrdersPage;
-  Widget _testScreen;
+  Widget _settingsPage;
 
   int _currentIndex;
 
@@ -28,11 +25,12 @@ class _TabBarScreenState extends State<TabBarScreen> {
   void initState() {
     super.initState();
     _homePage = HomeView();
-    _cartPage = HomeView();
+    // _cartPage = HomeView();
     // _testScreen = HomeView();
-    _myOrdersPage = HomeView();
-    _morePage = SettingView();
-    _pages = [_homePage, _cartPage, _myOrdersPage, _morePage];
+    // _myOrdersPage = HomeView();
+    _settingsPage = SettingView();
+    // _pages = [_homePage, _homePage, _homePage, _morePage];
+    _pages = [_homePage, _homePage, _settingsPage];
 
     _currentIndex = 0;
   }
@@ -42,6 +40,8 @@ class _TabBarScreenState extends State<TabBarScreen> {
     return WillPopScope(
       onWillPop: () {},
       child: Scaffold(
+        floatingActionButton: HomeFAB(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomNavigationBar(
           key: navBarKey,
           type: BottomNavigationBarType.fixed,
@@ -52,11 +52,12 @@ class _TabBarScreenState extends State<TabBarScreen> {
           items: <BottomNavigationBarItem>[
             // TODO: Translate these
             BottomNavigationBarItem(icon: Icon(Icons.home), label: getText(context, 'Home')),
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.cart), label: getText(context, 'Cart')),
-            BottomNavigationBarItem(icon: Icon(Icons.history), label: getText(context, 'Orders')),
+            BottomNavigationBarItem(icon: Icon(Icons.calculate, color: kTransparent), label: getText(context, 'Rate Calculator')),
             BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: getText(context, 'More')),
           ],
-          onTap: (index) => setState(() => _currentIndex = index),
+          onTap: (index) => setState(() {
+            if (index != 1) return _currentIndex = index;
+          }),
         ),
         body: IndexedStack(index: _currentIndex, children: _pages),
       ),

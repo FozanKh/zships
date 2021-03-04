@@ -40,3 +40,8 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 lib/service/api/api_private_keys.dart
+testing.json
+lib/core/model/api full reuslt.dart
+testing.json
+.vscode/settings.json
+testing.json

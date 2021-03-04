@@ -27,8 +27,8 @@ class SettingCard extends StatelessWidget {
     return Bounce(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.all(5),
-        decoration: kContainerDecoration.copyWith(color: color ?? kLight2, borderRadius: BorderRadius.circular(10)),
+        margin: EdgeInsets.all(10),
+        decoration: kContainerDecoration.copyWith(color: color ?? kLight2, borderRadius: BorderRadius.circular(10), boxShadow: kBoxShadowLight),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

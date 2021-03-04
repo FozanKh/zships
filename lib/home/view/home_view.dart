@@ -1,16 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:zships/component/progress_indicator.dart';
+import 'package:zships/component/diffuser.dart';
 import 'package:zships/component/rounded_button.dart';
+import 'package:zships/component/rounded_text_field.dart';
 import 'package:zships/constants/colors.dart';
-import 'package:zships/constants/decorations.dart';
 import 'package:zships/core/model/shipment.dart';
 import 'package:zships/globals.dart';
 import 'package:zships/home/component/home_appbar.dart';
-import 'package:zships/home/component/shipment_card.dart';
+import 'package:zships/shipments/component/shipment_card.dart';
 import 'package:zships/home/controller/home_controller.dart';
-import 'package:zships/home/model/testing_model.dart';
 import 'package:zships/localization/constants.dart';
 
 class HomeView extends StatefulWidget {
@@ -23,7 +20,10 @@ class _HomeViewState extends State<HomeView> {
   HomeController controller;
   @override
   void initState() {
-    controller = HomeController(context);
+    controller = HomeController(context, this);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.loadShipments().then((x) => setState(() {}));
+    });
     super.initState();
   }
 
@@ -46,11 +46,30 @@ class _HomeViewState extends State<HomeView> {
                   : Text(getText(context, 'No Shipments on Your Account'),
                       textAlign: TextAlign.center, style: TextStyle(fontSize: 24, color: kDark4)),
             )
-          : SingleChildScrollView(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                children: List.generate(allShipments.length, (index) => ShipmentCard(shipment: allShipments[index])),
-              ),
+          : Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: RoundedTextField(
+                    hint: getText(context, 'Track Number or ID'),
+                    margin: EdgeInsets.only(top: 10),
+                    trailingIcon: Icons.search,
+                    onChanged: controller.search,
+                  ),
+                ),
+                if (controller.filteredShipments.length > 0)
+                  Expanded(
+                    child: Diffuser(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.fromLTRB(15, 0, 15, 100),
+                        child: Column(
+                          children: List.generate(
+                              10, (index) => ShipmentCard(shipment: controller.filteredShipments[index % controller.filteredShipments.length])),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             ),
     );
   }

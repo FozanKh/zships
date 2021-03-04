@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class User {
   final String uid;
   final String name;
@@ -52,19 +50,5 @@ class User {
   @override
   String toString() {
     return 'User(uid: $uid, name: $name, gender: $gender, email: $email, phone: $phone, isAnonymous: $isAnonymous, isEmailVerified: $isEmailVerified)';
-  }
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is User &&
-        o.uid == uid &&
-        o.name == name &&
-        o.gender == gender &&
-        o.email == email &&
-        o.phone == phone &&
-        o.isAnonymous == isAnonymous &&
-        o.isEmailVerified == isEmailVerified;
   }
 }

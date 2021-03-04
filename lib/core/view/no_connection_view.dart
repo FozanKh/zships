@@ -6,7 +6,6 @@ import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/decorations.dart';
 import 'package:zships/constants/helper_methods.dart';
 import 'package:zships/constants/validate.dart';
-import 'package:zships/globals.dart';
 import 'package:zships/localization/constants.dart';
 
 class NoConnectionView extends StatelessWidget {

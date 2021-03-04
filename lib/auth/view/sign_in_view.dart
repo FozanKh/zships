@@ -1,16 +1,12 @@
 import 'package:zships/auth/services/auth.dart';
-import 'package:zships/auth/view/sign_up_view.dart';
 import 'package:zships/component/alertDialog.dart';
-import 'package:zships/component/custom_alignment.dart';
 import 'package:zships/component/progress_indicator.dart';
-import 'package:zships/component/rounded_textfield.dart';
+import 'package:zships/component/rounded_text_field.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/helper_methods.dart';
-import 'package:zships/globals.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:zships/component/animations/showUp.dart';
 import 'package:zships/constants/decorations.dart';
-import 'package:zships/constants/validate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

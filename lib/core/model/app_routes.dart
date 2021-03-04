@@ -10,6 +10,7 @@ import 'package:zships/core/view/no_connection_view.dart';
 import 'package:zships/core/view/splash_screen.dart';
 import 'package:zships/core/view/tabbar_view.dart';
 import 'package:zships/core/wrapper.dart';
+import 'package:zships/shipments/view/shipment_view.dart';
 
 abstract class Routes {
   static MaterialPageRoute materialRoutes(RouteSettings settings) {
@@ -33,6 +34,10 @@ abstract class Routes {
         return MaterialPageRoute(builder: (_) => PhoneAuthView(), settings: settings);
       case NoConnectionView.route:
         return MaterialPageRoute(builder: (_) => NoConnectionView(), settings: settings);
+      case ShipmentView.route:
+        return MaterialPageRoute(builder: (_) => ShipmentView(shipment: args['shipment']), settings: settings);
+      // case RateCalculatorView.route:
+      //   return MaterialPageRoute(builder: (_) => RateCalculatorView(), settings: settings);
       // case OrderView.route:
       //   return MaterialPageRoute(builder: (_) => OrderView(order: args['order']), settings: settings);
       // case RestaurantView.route:
@@ -67,6 +72,10 @@ abstract class Routes {
         return CupertinoPageRoute(builder: (_) => PhoneAuthView(), settings: settings);
       case NoConnectionView.route:
         return CupertinoPageRoute(builder: (_) => NoConnectionView(), settings: settings);
+      case ShipmentView.route:
+        return CupertinoPageRoute(builder: (_) => ShipmentView(shipment: args['shipment']), settings: settings);
+      // case RateCalculatorView.route:
+      //   return CupertinoPageRoute(builder: (_) => RateCalculatorView(), settings: settings);
       // case OrderView.route:
       //   return CupertinoPageRoute(builder: (_) => OrderView(order: args['order']), settings: settings);
       // case RestaurantView.route:

@@ -1,24 +1,18 @@
 import 'dart:developer';
 import 'dart:ui';
-import 'package:zships/auth/model/user.dart';
 import 'package:zships/auth/view/fill_user_info.dart';
 import 'package:zships/constants/helper_methods.dart';
-import 'package:zships/core/model/extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:zships/auth/services/auth.dart';
 import 'package:zships/auth/view/otp_view.dart';
-import 'package:zships/component/alertDialog.dart';
 import 'package:zships/component/animations/showUp.dart';
-import 'package:zships/component/progress_indicator.dart';
-import 'package:zships/component/rounded_textfield.dart';
+import 'package:zships/component/rounded_text_field.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/validate.dart';
-import 'package:zships/globals.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:zships/constants/decorations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class PhoneAuthView extends StatefulWidget {
   static const String route = 'PhoneAuthView';
@@ -34,14 +28,11 @@ class _PhoneAuthViewState extends State<PhoneAuthView> {
   AuthService _auth = AuthService();
   String _userPhone = "";
   bool loading = false;
-  TextEditingController _phoneController;
   bool validPhone = false;
   String smsCode;
-  var _credential;
 
   @override
   void initState() {
-    _phoneController = TextEditingController();
     // _pr = ProgressDialog(context);
     super.initState();
   }

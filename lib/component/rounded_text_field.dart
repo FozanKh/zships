@@ -85,6 +85,7 @@ class _RoundedTextFieldState extends State<RoundedTextField> {
       child: Titled(
         title: widget.title,
         child: Container(
+          decoration: BoxDecoration(boxShadow: kBoxShadowLight),
           height: widget.height ?? kCardHeight,
           child: TextField(
             autofocus: widget.autoFocus,
@@ -113,12 +114,8 @@ class _RoundedTextFieldState extends State<RoundedTextField> {
                           opacity: safeIsNotEmpty(_textController.text) ? 1 : 0,
                           child: InkWell(
                             onTap: () => setState(() {
-                              safeIsNotEmpty(_textController.text)
-                                  ? widget.obscureText
-                                      ? hidePassword = !hidePassword
-                                      : _textController.clear()
-                                  : null;
-                              widget.onChanged(_textController?.text ?? '');
+                              if (safeIsNotEmpty(_textController.text)) widget.obscureText ? hidePassword = !hidePassword : _textController.clear();
+                              if (widget.onChanged != null) widget.onChanged(_textController?.text ?? '');
                             }),
                             child: Icon(
                               widget.obscureText ? CupertinoIcons.eye_solid : CupertinoIcons.clear_circled_solid,

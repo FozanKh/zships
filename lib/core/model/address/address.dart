@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Address {
   String id;
   String object;
@@ -103,7 +101,7 @@ class Address {
 class Verifications {
   Verifications();
 
-  Verifications.fromMap(Map<dynamic, dynamic> map) {}
+  Verifications.fromMap(Map<dynamic, dynamic> map);
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
