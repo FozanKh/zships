@@ -18,6 +18,12 @@ class HomeAppBar extends PreferredSize {
       backgroundColor: kPrimaryColor,
       elevation: 0,
       toolbarHeight: kToolbarHeight + 30,
+      actions: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 20, 20),
+          child: Image.asset('assets/images/shipment.png', color: kWhite, height: 50, width: 50),
+        ),
+      ],
       flexibleSpace: Stack(
         alignment: Alignment.topLeft,
         children: [
