@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zships/auth/model/user.dart';
 import 'package:zships/auth/view/login_view.dart';
-import 'package:zships/constants/helper_methods.dart';
 import 'package:zships/core/view/tabbar_view.dart';
 import 'package:zships/service/database.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +35,7 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<User>(context, listen: false);
+    var user = Provider.of<User>(context);
     // if (user != null) print(user?.email?.toString() + user?.name?.toString());
     if (user != null && DatabaseService.instance?.uid == null || DatabaseService.instance?.uid == "" || DatabaseService.instance.uid != user?.uid)
       DatabaseService.instance.setValues(uid: user?.uid ?? "");
