@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 /// [Main] Colors
 const Color kTransparent = Colors.transparent;
+const Color kWhite = Colors.white;
 const Color kPrimaryColor = Color(0xFF634275);
 const Color kPrimaryVariantColor = Color(0xFF8d5da7);
 const Color kSecondaryColor = Color(0xFFd2a55d);
