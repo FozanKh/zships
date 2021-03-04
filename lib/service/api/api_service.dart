@@ -27,15 +27,14 @@ class ApiService {
       'start_datetime': '2016-01-02T08:50:00Z',
     };
 
-    var res = await http.get('https://api.easypost.com/v2/shipments/', headers: {'Authorization': authn});
+    var res = await http.get('${ApiEndPoints.instance.baseUrl}/v2/shipments/', headers: {'Authorization': authn});
     print('http.post statusCode= ${res.statusCode}');
     var result = jsonDecode(res.body);
+    log(res.body);
     allShipments.clear();
     result['shipments'].forEach((v) {
       allShipments.add(Shipment.fromMap(v));
     });
-    log(allShipments.toString());
-    print(allShipments.length);
   }
 
   Future<void> helloF() async {
@@ -49,7 +48,7 @@ class ApiService {
 
     var data = 'rate[id]={rate_d8d681cd8c034643922fafaf255d331d}';
 
-    var res = await http.post('https://api.easypost.com/v2/shipments/shp_54a1ee7b4fbb471998cfb638f6445c54/buy/',
+    var res = await http.post('${ApiEndPoints.instance.baseUrl}/v2/shipments/shp_54a1ee7b4fbb471998cfb638f6445c54/buy/',
         headers: {'Authorization': authn}, body: data);
     print('http.post statusCode= ${res.statusCode}');
     print(res.body);
@@ -60,12 +59,12 @@ class ApiService {
     var pword = '';
     var authn = 'Basic ' + base64Encode(utf8.encode('$uname:$pword'));
     var shipmentId = 'shp_54a1ee7b4fbb471998cfb638f6445c54';
-    var res = await http.get('https://api.easypost.com/v2/shipments/$shipmentId', headers: {'Authorization': authn});
+    var res = await http.get('${ApiEndPoints.instance.baseUrl}/v2/shipments/$shipmentId', headers: {'Authorization': authn});
     print('http.get: statusCode= ${res.statusCode}');
     print(res.body);
   }
 
-  testApi() async {
+  createSampleShipment() async {
     var uname = ApiPrivateKeys.instance.testingKey;
     var pword = '';
     var authn = 'Basic ' + base64Encode(utf8.encode('$uname:$pword'));
@@ -95,8 +94,28 @@ class ApiService {
       'shipment[customs_info][id]': 'cstinfo_Safwan',
     };
 
-    var res = await http.post('https://api.easypost.com/v2/shipments', headers: {'Authorization': authn}, body: data);
+    var res = await http.post('${ApiEndPoints.instance.baseUrl}/v2/shipments', headers: {'Authorization': authn}, body: data);
     print('http.post statusCode= ${res.statusCode}');
     log(res.body);
+  }
+
+  sampleRate(String fromZipCode, String toZipCode) async {
+    var uname = ApiPrivateKeys.instance.testingKey;
+    var pword = '';
+    var authn = 'Basic ' + base64Encode(utf8.encode('$uname:$pword'));
+
+    var data = {
+      'shipment[to_address][zip]': fromZipCode,
+      'shipment[from_address][zip]': toZipCode,
+      'shipment[parcel][weight]': '65.9',
+    };
+
+    var res = await http.post('${ApiEndPoints.instance.baseUrl}/v2/shipments', headers: {'Authorization': authn}, body: data);
+    print('http.post statusCode= ${res.statusCode}');
+    // log(res.body);
+    var result = jsonDecode(res.body);
+    log(result.toString());
+    Shipment s = Shipment.fromMap(result);
+    return s;
   }
 }

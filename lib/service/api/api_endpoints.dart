@@ -9,4 +9,5 @@ class ApiEndPoints {
       return _instance;
   }
 
+  String baseUrl ='https://api.easypost.com/';
 }
