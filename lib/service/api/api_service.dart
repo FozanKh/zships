@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:zships/core/model/shipment.dart';
 import 'package:zships/globals.dart';
 import 'package:zships/service/api/api_endpoints.dart';
-import 'package:zships/service/api/api_private_keys.dart';
 
 class ApiService {
   static ApiService _instance;
@@ -17,18 +16,20 @@ class ApiService {
       return _instance;
   }
 
-  gettingAllShipments() async {
-    var uname = ApiPrivateKeys.instance.testingKey;
+  String key;
+
+  retrieveAllShipment() async {
+    assert(key != null);
     var pword = '';
-    var authn = 'Basic ' + base64Encode(utf8.encode('$uname:$pword'));
+    var authn = 'Basic ' + base64Encode(utf8.encode('$key:$pword'));
 
     var data = {
       'page_size': '1',
       'start_datetime': '2016-01-02T08:50:00Z',
     };
 
-    var res = await http.get('${ApiEndPoints.instance.baseUrl}/v2/shipments/', headers: {'Authorization': authn});
-    print('http.post statusCode= ${res.statusCode}');
+    var res = await http.get('${ApiEndPoints.instance.baseUrl}/v2/shipments?purchased=false', headers: {'Authorization': authn});
+    print('http.post statusCode = ${res.statusCode}');
     var result = jsonDecode(res.body);
     log(res.body);
     allShipments.clear();
@@ -37,14 +38,11 @@ class ApiService {
     });
   }
 
-  Future<void> helloF() async {
-    // HttpsCallable callable = FirebaseFunctions.instance.httpsCallable('listFruit');
-    // final results = await callable();
-    // var fruit = results.data; // ["Apple", "Banana", "Cherry", "Date", "Fig", "Grapes"]
-    // print(fruit);
-    var uname = ApiPrivateKeys.instance.testingKey;
+  Future<void> buyShipment() async {
+    assert(key != null);
+
     var pword = '';
-    var authn = 'Basic ' + base64Encode(utf8.encode('$uname:$pword'));
+    var authn = 'Basic ' + base64Encode(utf8.encode('$key:$pword'));
 
     var data = 'rate[id]={rate_d8d681cd8c034643922fafaf255d331d}';
 
@@ -54,20 +52,22 @@ class ApiService {
     print(res.body);
   }
 
-  gettingShipment() async {
-    var uname = ApiPrivateKeys.instance.testingKey;
+  retrieveShipment() async {
+    assert(key != null);
+
     var pword = '';
-    var authn = 'Basic ' + base64Encode(utf8.encode('$uname:$pword'));
+    var authn = 'Basic ' + base64Encode(utf8.encode('$key:$pword'));
     var shipmentId = 'shp_54a1ee7b4fbb471998cfb638f6445c54';
     var res = await http.get('${ApiEndPoints.instance.baseUrl}/v2/shipments/$shipmentId', headers: {'Authorization': authn});
     print('http.get: statusCode= ${res.statusCode}');
-    print(res.body);
+    // print(res.body);
   }
 
   createSampleShipment() async {
-    var uname = ApiPrivateKeys.instance.testingKey;
+    assert(key != null);
+
     var pword = '';
-    var authn = 'Basic ' + base64Encode(utf8.encode('$uname:$pword'));
+    var authn = 'Basic ' + base64Encode(utf8.encode('$key:$pword'));
 
     var data = {
       'shipment[to_address][name]': 'Safwan',
@@ -96,13 +96,14 @@ class ApiService {
 
     var res = await http.post('${ApiEndPoints.instance.baseUrl}/v2/shipments', headers: {'Authorization': authn}, body: data);
     print('http.post statusCode= ${res.statusCode}');
-    log(res.body);
+    // log(res.body);
   }
 
   sampleRate(String fromZipCode, String toZipCode) async {
-    var uname = ApiPrivateKeys.instance.testingKey;
+    assert(key != null);
+
     var pword = '';
-    var authn = 'Basic ' + base64Encode(utf8.encode('$uname:$pword'));
+    var authn = 'Basic ' + base64Encode(utf8.encode('$key:$pword'));
 
     var data = {
       'shipment[to_address][zip]': fromZipCode,
@@ -114,7 +115,7 @@ class ApiService {
     print('http.post statusCode= ${res.statusCode}');
     // log(res.body);
     var result = jsonDecode(res.body);
-    log(result.toString());
+    // log(result.toString());
     Shipment s = Shipment.fromMap(result);
     return s;
   }

@@ -1,10 +1,7 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zships/auth/model/user.dart';
-import 'package:zships/constants/validate.dart';
-import 'package:zships/service/collectionsReference.dart';
-import 'package:zships/service/sharedPreferences.dart';
+import 'package:zships/service/collections_reference.dart';
+import 'package:zships/service/shared_preferences.dart';
 
 class DatabaseService {
   static DatabaseService _instance;
@@ -47,38 +44,6 @@ class DatabaseService {
     }
   }
 
-  saveDeviceToken({String newUid, String fcmToken}) async {
-    // Save it to Firestore
-    log('Saving token to firestore: \n uid: $newUid\ntoken: $fcmToken');
-    if (newUid == null) {
-      log('uid = $newUid, could not save token, getting the token again');
-      newUid = await AppSharedPreferences.instance.getUid();
-      log('uid = $newUid, could not save token, getting the token again');
-    }
-    if (fcmToken != null && safeIsNotEmpty(newUid)) {
-      await collections.users.doc(newUid).collection('tokens').doc(fcmToken).set({
-        'token': fcmToken,
-        'createdAt': Timestamp.now(), // optional
-        'platform': Platform.operatingSystem // optional
-      });
-      log('Token saved: \n uid: $newUid\ntoken: $fcmToken');
-    }
-  }
-
-  removeDeviceToken({String newUid, String fcmToken}) async {
-    // Save it to Firestore
-    log('removing token from firestore: \n uid: $newUid\ntoken: $fcmToken');
-    if (newUid == null) {
-      log('uid = $newUid, could not removed token, getting the token again');
-      newUid = await AppSharedPreferences.instance.getUid();
-      log('uid = $newUid, could not removed token, getting the token again');
-    }
-    if (fcmToken != null && safeIsNotEmpty(newUid)) {
-      await collections.restaurants.doc(newUid).collection('tokens').doc(fcmToken).delete();
-      log('Token removed: \n uid: $newUid\ntoken: ${fcmToken.substring(0, 50)}');
-    }
-  }
-
   // Get a stream of the user document
   Stream<User> get firebaseUser {
     return collections.users.doc(uid).snapshots().map((snap) => User.fromMap(snap.data()));
@@ -86,6 +51,22 @@ class DatabaseService {
 
   Future<User> get firebaseUserData async {
     return await collections.users.doc(uid).snapshots().map((snap) => User.fromMap(snap.data())).first;
+  }
+
+  Future updateUserKey({String newUid, String key}) async {
+    print('updating user key');
+    return await collections.users.doc(newUid).set({'apiKey': key}, SetOptions(merge: true));
+  }
+
+  Future getUserKey({String newUid}) async {
+    print('updating user key');
+    Map<String, dynamic> result;
+    await collections.users.doc(newUid).get().then((dataSnapshot) {
+      if (dataSnapshot.exists) {
+        result = dataSnapshot.data();
+      }
+    });
+    return result['apiKey'];
   }
 
   Future<Map<String, dynamic>> getUserData() async {

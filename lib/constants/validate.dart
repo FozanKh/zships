@@ -11,7 +11,7 @@ bool validateEmail(String value) {
   String pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
-  RegExp regExp =  RegExp(pattern);
+  RegExp regExp = RegExp(pattern);
 
   return regExp.hasMatch(value);
 }
@@ -19,19 +19,26 @@ bool validateEmail(String value) {
 bool validateUsername(String value) {
   String pattern = r'^(?=[a-zA-Z0-9._]{3,20}$)(?!.*[_.]{2})[^_.].*[^_.]$';
 
-  RegExp regExp =  RegExp(pattern);
+  RegExp regExp = RegExp(pattern);
 
   return regExp.hasMatch(value);
 }
 
 bool validatePhoneNumber(String value) {
   String pattern = r'^(05)[0-9]{8}$';
-  RegExp regExp =  RegExp(pattern);
+  RegExp regExp = RegExp(pattern);
   return regExp.hasMatch(value);
 }
 
 bool validatePassword(String value) {
   if ((value.length < 6) || value.isEmpty) {
+    return false;
+  }
+  return true;
+}
+
+bool validateApiKey(String value) {
+  if ((value.length < 20) || value.isEmpty) {
     return false;
   }
   return true;
