@@ -164,13 +164,14 @@ class AlertDialogBox {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Center(
-                    child: Text(
-                      locale ? getText(context, message) : message,
-                      style: kAlertTS,
-                      textAlign: TextAlign.center,
+                  if (message != null)
+                    Center(
+                      child: Text(
+                        locale ? getText(context, message) : message,
+                        style: kAlertTS,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
