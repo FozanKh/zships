@@ -1,6 +1,5 @@
 import 'package:zships/auth/model/user.dart';
-import 'package:zships/auth/view/fill_user_info.dart';
-import 'package:zships/auth/view/phon_auth_view.dart';
+import 'package:zships/auth/view/update_api_key.dart';
 import 'package:zships/component/action_button.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/decorations.dart';
@@ -8,7 +7,7 @@ import 'package:zships/constants/fz_icons.dart';
 import 'package:zships/constants/helper_methods.dart';
 import 'package:zships/main.dart';
 import 'package:zships/service/api/api_service.dart';
-import 'package:zships/service/sharedPreferences.dart';
+import 'package:zships/service/shared_preferences.dart';
 import 'package:zships/settings/component/setting_card.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,21 +64,13 @@ class _SettingViewState extends State<SettingView> {
           physics: BouncingScrollPhysics(),
           child: Column(
             children: <Widget>[
-              if (!controller.userExists)
-                SettingCard(
-                  title: getText(context, 'Login'),
-                  icon: FzIcons.signup,
-                  navigate: false,
-                  color: kLight2,
-                  onTap: () => navigateTo(context, PhoneAuthView.route),
-                ),
               if (controller.userExists)
                 SettingCard(
                   title: getText(context, 'Update Profile'),
                   icon: Icons.person,
                   navigate: false,
                   color: kLight2,
-                  onTap: () => navigateTo(context, UpdateUserInfo.route),
+                  onTap: () => navigateTo(context, UpdateApiKey.route),
                 ),
               if (controller.userExists)
                 SettingCard(
@@ -90,26 +81,26 @@ class _SettingViewState extends State<SettingView> {
                   titleColor: kRed0,
                   onTap: () => controller.logout(),
                 ),
-              SettingCard(
-                title: getText(context, 'testApi'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.createSampleShipment(),
-              ),
-              SettingCard(
-                title: getText(context, 'gettingShipments'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.gettingAllShipments(),
-              ),
-              SettingCard(
-                title: getText(context, 'gettingShipment'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.gettingShipment(),
-              ),
-              SettingCard(
-                title: getText(context, 'helloF'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.helloF(),
-              ),
+              // SettingCard(
+              //   title: getText(context, 'testApi'),
+              //   icon: FzIcons.privacy_policy,
+              //   onTap: () => ApiService.instance.createSampleShipment(Provider.of<User>(context, listen: false).apiKey),
+              // ),
+              // SettingCard(
+              //   title: getText(context, 'gettingShipments'),
+              //   icon: FzIcons.privacy_policy,
+              //   onTap: () => ApiService.instance.retrieveAllShipment(Provider.of<User>(context, listen: false).apiKey),
+              // ),
+              // SettingCard(
+              //   title: getText(context, 'gettingShipment'),
+              //   icon: FzIcons.privacy_policy,
+              //   onTap: () => ApiService.instance.retrieveShipment(Provider.of<User>(context, listen: false).apiKey),
+              // ),
+              // SettingCard(
+              //   title: getText(context, 'helloF'),
+              //   icon: FzIcons.privacy_policy,
+              //   onTap: () => ApiService.instance.buyShipment(Provider.of<User>(context, listen: false).apiKey),
+              // ),
             ],
           ),
         ),

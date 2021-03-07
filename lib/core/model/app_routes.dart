@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zships/auth/view/fill_user_info.dart';
+import 'package:zships/auth/view/update_api_key.dart';
 import 'package:zships/auth/view/login_view.dart';
-import 'package:zships/auth/view/otp_view.dart';
-import 'package:zships/auth/view/phon_auth_view.dart';
 import 'package:zships/auth/view/sign_in_view.dart';
 import 'package:zships/auth/view/sign_up_view.dart';
 import 'package:zships/core/view/no_connection_view.dart';
@@ -25,13 +23,9 @@ abstract class Routes {
       case SignInView.route:
         return MaterialPageRoute(builder: (_) => SignInView(), settings: settings);
       case SignUpView.route:
-        return MaterialPageRoute(builder: (_) => SignUpView(isAnonymous: settings.arguments), settings: settings);
-      case UpdateUserInfo.route:
-        return MaterialPageRoute(builder: (_) => UpdateUserInfo(onSignUp: args['onSignUp'] ?? false), settings: settings);
-      case OTPView.route:
-        return MaterialPageRoute(builder: (_) => OTPView(args['verificationId'], args['forceResendingToken']), settings: settings);
-      case PhoneAuthView.route:
-        return MaterialPageRoute(builder: (_) => PhoneAuthView(), settings: settings);
+        return MaterialPageRoute(builder: (_) => SignUpView(), settings: settings);
+      case UpdateApiKey.route:
+        return MaterialPageRoute(builder: (_) => UpdateApiKey(onSignUp: args['onSignUp'] ?? false), settings: settings);
       case NoConnectionView.route:
         return MaterialPageRoute(builder: (_) => NoConnectionView(), settings: settings);
       case ShipmentView.route:
@@ -63,13 +57,9 @@ abstract class Routes {
       case SignInView.route:
         return CupertinoPageRoute(builder: (_) => SignInView(), settings: settings);
       case SignUpView.route:
-        return CupertinoPageRoute(builder: (_) => SignUpView(isAnonymous: settings.arguments), settings: settings);
-      case UpdateUserInfo.route:
-        return CupertinoPageRoute(builder: (_) => UpdateUserInfo(onSignUp: args['onSignUp'] ?? false), settings: settings);
-      case OTPView.route:
-        return CupertinoPageRoute(builder: (_) => OTPView(args['verificationId'], args['forceResendingToken']), settings: settings);
-      case PhoneAuthView.route:
-        return CupertinoPageRoute(builder: (_) => PhoneAuthView(), settings: settings);
+        return CupertinoPageRoute(builder: (_) => SignUpView(), settings: settings);
+      case UpdateApiKey.route:
+        return CupertinoPageRoute(builder: (_) => UpdateApiKey(onSignUp: args['onSignUp'] ?? false), settings: settings);
       case NoConnectionView.route:
         return CupertinoPageRoute(builder: (_) => NoConnectionView(), settings: settings);
       case ShipmentView.route:

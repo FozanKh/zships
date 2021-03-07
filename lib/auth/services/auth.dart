@@ -4,14 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:zships/auth/model/user.dart';
 import 'package:zships/auth/services/auth_errors_handler.dart';
 import 'package:zships/service/database.dart';
-import 'package:zships/service/sharedPreferences.dart';
+import 'package:zships/service/shared_preferences.dart';
 
 class AuthService {
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 
   // create user obj based on firebase user
   User _userFromFirebaseUser(auth.User user) {
-    // print('User from firebase: ${user}');
     if (user != null && user.uid != null) {
       AppSharedPreferences.instance.setUid(user.uid);
       return User(
@@ -20,8 +19,8 @@ class AuthService {
         name: user.displayName,
         isAnonymous: user.isAnonymous,
         phone: user.phoneNumber,
-        isEmailVerified: false,
-      ); //user.uid, user.email, user.isAnonymous, false);
+        isEmailVerified: user.emailVerified,
+      );
     } else {
       return null;
     }
@@ -38,11 +37,7 @@ class AuthService {
 
   // sign in anonymously
   Future preLunchHome() async {
-    // await setUpUserCart();
-  }
-
-  Future setUpUserCart() async {
-    // providerCart = await DatabaseService.instance.getCart();
+    // TODO: Before Launch Actions
   }
 
   /// [Sign in] with [Email] and [Password]
@@ -93,20 +88,11 @@ class AuthService {
 
   /// [Register] with [Email] and [Password]
 
-  Future registerWithEmailAndPassword(String email, String password, {String name}) async {
-    //, String phone) async {
+  Future registerWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password).then((result) async {
         await DatabaseService.instance.createUser(email: email, newUid: result.user.uid);
       });
-      // await _auth.createUserWithEmailAndPassword(email: email, password: password).then((result) async {
-      //   if (name != null) result.user.updateProfile(displayName: name);
-      //   // create a new document for the user with the uid
-      //   await DatabaseService.instance
-      //       .createUser(email: result.user.email, newUid: result.user.uid, name: result.user.displayName, phone: result.user.phoneNumber);
-      // await preLunchHome();
-      // });
-
       return (user);
     } catch (e) {
       return authErrorsHandler(e.code);
@@ -117,7 +103,6 @@ class AuthService {
 
   Future<String> authWithPhoneNumber(String phoneNumber, Function onCodeSent) async {
     var error;
-
     log('Verifying Phone Number');
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
@@ -147,15 +132,12 @@ class AuthService {
   Future updatePassword(String newPassword, String oldPassword, String email) async {
     try {
       var errors;
-
       await _auth.signInWithEmailAndPassword(email: email, password: oldPassword).catchError((onError) => {errors = onError.code});
-
       auth.User user = _auth.currentUser;
       await user.updatePassword(newPassword).catchError((onError) {
         errors = onError.code;
         print(errors);
       });
-
       if (errors == null) {
         return ("passwordUpdated");
       } else {

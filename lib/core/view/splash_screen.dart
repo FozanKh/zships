@@ -9,7 +9,7 @@ import 'package:zships/core/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:zships/service/sharedPreferences.dart';
+import 'package:zships/service/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String route = 'SplashScreen';

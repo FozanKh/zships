@@ -148,7 +148,7 @@ class _RoundedTextFieldState extends State<RoundedTextField> {
               hintStyle: widget.hintStyle ?? kHintTS,
             ),
             onChanged: (value) {
-              widget.onChanged(value);
+              if (widget.onChanged != null) widget.onChanged(value);
               setState(() {});
             },
           ),

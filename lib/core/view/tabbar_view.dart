@@ -1,20 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zships/auth/model/user.dart';
 import 'package:zships/constants/colors.dart';
-import 'package:zships/globals.dart';
 import 'package:zships/home/component/home_fab.dart';
 import 'package:zships/home/view/home_view.dart';
 import 'package:zships/localization/constants.dart';
+import 'package:zships/service/api/api_service.dart';
+import 'package:zships/service/database.dart';
+import 'package:zships/service/shared_preferences.dart';
 import 'package:zships/settings/view/setting_view.dart';
 
 class TabBarScreen extends StatefulWidget {
   static const String route = 'TabBarScreen';
+  static GlobalKey navBarKey = new GlobalKey(debugLabel: 'btm_app_bar');
+
+  static switchTab(int page) {
+    (navBarKey.currentWidget as BottomNavigationBar).onTap(page);
+  }
 
   @override
   _TabBarScreenState createState() => _TabBarScreenState();
 }
 
 class _TabBarScreenState extends State<TabBarScreen> {
+  GlobalKey navBarKey = new GlobalKey(debugLabel: 'btm_app_bar');
   List<Widget> _pages;
   Widget _homePage;
   Widget _settingsPage;
@@ -23,16 +33,21 @@ class _TabBarScreenState extends State<TabBarScreen> {
 
   @override
   void initState() {
-    super.initState();
     _homePage = HomeView();
-    // _cartPage = HomeView();
-    // _testScreen = HomeView();
-    // _myOrdersPage = HomeView();
     _settingsPage = SettingView();
-    // _pages = [_homePage, _homePage, _homePage, _morePage];
     _pages = [_homePage, _homePage, _settingsPage];
-
     _currentIndex = 0;
+    getKey();
+    super.initState();
+  }
+
+  getKey() async {
+    String key = await DatabaseService.instance.getUserKey(newUid: Provider.of<User>(context, listen: false).uid);
+    ApiService.instance.key = key;
+    // if (key == null) {
+    // key = await DatabaseService.instance.getUserKey(newUid: Provider.of<User>(context, listen: false).uid);
+    // }
+    // AppSharedPreferences.instance.saveKey(key);
   }
 
   @override
