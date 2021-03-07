@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zships/component/alertDialog.dart';
+import 'package:zships/component/progress_indicator.dart';
 import 'package:zships/constants/validate.dart';
 import 'package:zships/core/model/shipment.dart';
 import 'package:zships/globals.dart';
@@ -17,15 +19,23 @@ class HomeController {
     filteredShipments.addAll(allShipments);
   }
 
-  Future<void> loadShipments() async {
-    // ProgressDialog pr = ProgressDialog(context);
-    // await pr.show();
-    await ApiService.instance.gettingAllShipments();
+  Future<void> loadShipments({bool force = false}) async {
+    ProgressDialog pr = ProgressDialog(context);
+    if (force) await pr.show();
+    if (ApiService.instance.key == null) await Future.delayed(Duration(seconds: 2));
+    await ApiService.instance.retrieveAllShipment();
     _shipmentsLoaded = true;
     filteredShipments.clear();
     filteredShipments.addAll(allShipments);
     client.setState(() {});
-    // await pr.hide();
+    if (force) await pr.hide();
+
+    if (!safeListIsNotEmpty(allShipments)) {
+      if (await checkConnection() == false)
+        AlertDialogBox.showAlert(context, message: "Please check your internet and try again");
+      else
+        AlertDialogBox.showAlert(context, message: "Sorry there has been an error, please check that your api key is correct from the settings");
+    }
   }
 
   void search(String value) {

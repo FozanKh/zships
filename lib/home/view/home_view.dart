@@ -40,7 +40,7 @@ class _HomeViewState extends State<HomeView> {
                       children: [
                         Text(getText(context, 'No Shipments Loaded'), textAlign: TextAlign.center, style: TextStyle(fontSize: 24, color: kDark4)),
                         SizedBox(height: 50),
-                        RoundedButton(title: 'Load Shipments', buttonColor: kButtonColor, onTap: () => controller.loadShipments()),
+                        RoundedButton(title: 'Load Shipments', buttonColor: kButtonColor, onTap: () => controller.loadShipments(force: true)),
                       ],
                     )
                   : Text(getText(context, 'No Shipments on Your Account'),
@@ -64,7 +64,7 @@ class _HomeViewState extends State<HomeView> {
                         padding: EdgeInsets.fromLTRB(15, 0, 15, 100),
                         child: Column(
                           children: List.generate(
-                              10, (index) => ShipmentCard(shipment: controller.filteredShipments[index % controller.filteredShipments.length])),
+                              controller.filteredShipments.length, (index) => ShipmentCard(shipment: controller.filteredShipments[index])),
                         ),
                       ),
                     ),
