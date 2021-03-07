@@ -6,11 +6,17 @@ import 'package:zships/localization/constants.dart';
 import 'package:zships/shipments/controller/rate_controller.dart';
 
 // ignore: must_be_immutable
-class RateCalculatorView extends StatelessWidget {
-  RateController controller;
+class RateCalculatorView extends StatefulWidget {
+  @override
+  _RateCalculatorViewState createState() => _RateCalculatorViewState();
+}
 
-  RateCalculatorView() {
-    controller = RateController();
+class _RateCalculatorViewState extends State<RateCalculatorView> {
+  RateController controller;
+  @override
+  void initState() {
+    controller = RateController(context);
+    super.initState();
   }
 
   @override
