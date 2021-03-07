@@ -1,12 +1,9 @@
-import 'package:zships/auth/services/auth.dart';
+import 'package:zships/auth/controller/auth_controller.dart';
 import 'package:zships/auth/view/sign_in_view.dart';
-import 'package:zships/component/alertDialog.dart';
 import 'package:zships/component/animations/showUp.dart';
-import 'package:zships/component/progress_indicator.dart';
 import 'package:zships/component/rounded_text_field.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/helper_methods.dart';
-import 'package:zships/core/wrapper.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:zships/constants/decorations.dart';
 import 'package:zships/constants/validate.dart';
@@ -16,25 +13,19 @@ import 'package:flutter/material.dart';
 class SignUpView extends StatefulWidget {
   static const String route = 'SignUpView';
 
-  final bool isAnonymous;
-
-  SignUpView({this.isAnonymous = false});
   @override
-  _SignUpViewState createState() => _SignUpViewState(isAnonymous: this.isAnonymous ?? false);
+  _SignUpViewState createState() => _SignUpViewState();
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  final bool isAnonymous;
-  AuthService _auth = AuthService();
-  String _userEmail = "";
-  String _userPassword = "";
+  AuthController controller;
 
-  bool validEmail = false;
-  bool validPassword = false;
+  @override
+  void initState() {
+    controller = AuthController(context);
+    super.initState();
+  }
 
-  final int delayAmount = 200;
-
-  _SignUpViewState({this.isAnonymous = false});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +46,7 @@ class _SignUpViewState extends State<SignUpView> {
             children: <Widget>[
               Expanded(
                 child: ShowUp(
-                  delay: delayAmount,
+                  delay: 200,
                   child: SingleChildScrollView(
                     padding: EdgeInsets.all(20),
                     child: Column(
@@ -71,21 +62,16 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                         ),
                         SizedBox(height: 20),
-                        SizedBox(height: 10),
                         RoundedTextField(
                           title: getText(context, 'email'),
                           hint: getText(context, 'writeEmail'),
                           fillColor: Colors.grey.shade200,
                           keyboardType: TextInputType.emailAddress,
-                          onChanged: (value) {
-                            _userEmail = value;
-                            validEmail = validateEmail(_userEmail);
-                            setState(() {});
-                          },
+                          onChanged: (value) => setState(() => controller.emailChange(value)),
                         ),
-                        if (!validEmail && showErrorMessage(_userEmail, ValidationErrorType.email))
+                        if (!controller.validEmail && showErrorMessage(controller.email, ValidationErrorType.email))
                           ShowUp(
-                            delay: delayAmount,
+                            delay: 200,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Text(
@@ -101,15 +87,11 @@ class _SignUpViewState extends State<SignUpView> {
                           fillColor: Colors.grey.shade200,
                           obscureText: true,
                           keyboardType: TextInputType.visiblePassword,
-                          onChanged: (value) {
-                            _userPassword = value;
-                            validPassword = validatePassword(_userPassword);
-                            setState(() {});
-                          },
+                          onChanged: (value) => setState(() => controller.passwordChange(value)),
                         ),
-                        if (!validPassword && showErrorMessage(_userPassword, ValidationErrorType.password))
+                        if (!controller.validPassword && showErrorMessage(controller.password, ValidationErrorType.password))
                           ShowUp(
-                            delay: delayAmount,
+                            delay: 200,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
@@ -118,20 +100,17 @@ class _SignUpViewState extends State<SignUpView> {
                               ),
                             ),
                           ),
-                        SizedBox(height: 10),
                       ],
                     ),
                   ),
                 ),
               ),
               Visibility(
-                visible: validatePassword(_userPassword) && validateEmail(_userEmail),
+                visible: controller.validPassword && controller.validEmail,
                 child: InkWell(
-                  onTap: () async {
-                    signUp();
-                  },
+                  onTap: controller.signUp,
                   child: ShowUp(
-                    delay: delayAmount,
+                    delay: 200,
                     child: Container(
                       height: 80 + MediaQuery.of(context).padding.bottom,
                       padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
@@ -146,7 +125,7 @@ class _SignUpViewState extends State<SignUpView> {
             ],
           ),
           Visibility(
-            visible: !(validatePassword(_userPassword) && validateEmail(_userEmail)),
+            visible: !(controller.validEmail && controller.validPassword),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: InkWell(
@@ -172,35 +151,5 @@ class _SignUpViewState extends State<SignUpView> {
         ],
       ),
     );
-  }
-
-  Future<void> signUp() async {
-    final ProgressDialog pr = ProgressDialog(context);
-    await pr.show();
-    _userEmail.trim();
-    dynamic _result = await _auth.registerWithEmailAndPassword(_userEmail?.toLowerCase(), _userPassword);
-    await pr.hide();
-    if (_result is String) {
-      // If there is a issue with sign up
-      AlertDialogBox.showAlert(context, message: _result, locale: true);
-    } else {
-      replacePage(context, Wrapper.route);
-      // popPage(context);
-      // if (await AppSharedPreferences().isFirstLaunch())
-      //   Navigator.pushReplacement(
-      //     context,
-      //     PageRouteBuilder(
-      //       transitionDuration: Duration(milliseconds: 700),
-      //       transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) =>
-      //           FadeTransition(opacity: animation, child: child),
-      //       pageBuilder: (_, __, ___) => OnboardingScreen(),
-      //     ),
-      //   );
-      // else
-      // Navigator.pushReplacementNamed(context, 'Wrapper');
-      // await Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
-      // Navigator.pushReplacementNamed(context, 'Wrapper');
-      // isAnonymous ? Navigator.pushReplacementNamed(context, EditProfileView.route) : Navigator.pushReplacementNamed(context, Wrapper.route);
-    }
   }
 }
