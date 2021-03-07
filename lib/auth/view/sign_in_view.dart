@@ -1,9 +1,8 @@
-import 'package:zships/auth/services/auth.dart';
-import 'package:zships/component/alertDialog.dart';
-import 'package:zships/component/progress_indicator.dart';
+import 'package:zships/auth/controller/auth_controller.dart';
 import 'package:zships/component/rounded_text_field.dart';
-import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/helper_methods.dart';
+import 'package:zships/auth/view/sign_up_view.dart';
+import 'package:zships/constants/colors.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:zships/component/animations/showUp.dart';
 import 'package:zships/constants/decorations.dart';
@@ -19,10 +18,13 @@ class SignInView extends StatefulWidget {
 
 class _SignInViewState extends State<SignInView> {
   static bool _forgotPassword = false;
-  AuthService _auth = AuthService();
-  String _userEmail = "";
-  String _userPassword = "";
-  final int delayAmount = 200;
+  AuthController controller;
+
+  @override
+  void initState() {
+    controller = AuthController(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class _SignInViewState extends State<SignInView> {
             children: <Widget>[
               Expanded(
                 child: ShowUp(
-                  delay: delayAmount,
+                  delay: 200,
                   child: SingleChildScrollView(
                     padding: EdgeInsets.all(20),
                     child: Column(
@@ -59,78 +61,69 @@ class _SignInViewState extends State<SignInView> {
                                 style: kLabelTextStyle,
                                 children: [
                                   TextSpan(
-                                      text: _forgotPassword ? getText(context, 'allUnderControl') : getText(context, 'welcomeBack'),
+                                      text: _forgotPassword ? getText(context, 'All Under Control') : getText(context, 'welcomeBack'),
                                       style: kTitleTextStyle.copyWith(fontSize: 25))
                                 ]),
                           ),
                         ),
                         SizedBox(height: 20),
                         RoundedTextField(
-                          title: getText(context, 'apiKey'),
+                          title: getText(context, 'email'),
                           hint: getText(context, 'writeEmail'),
                           fillColor: Colors.grey.shade200,
                           keyboardType: TextInputType.emailAddress,
-                          onChanged: (value) {
-                            _userEmail = value;
-                            setState(() {});
-                          },
+                          onChanged: (value) => setState(() => controller.emailChange(value)),
                         ),
-                        // Visibility(
-                        //   visible: !_forgotPassword,
-                        //   child: ShowUp(
-                        //     delay: delayAmount,
-                        //     child: RoundedTextField(
-                        //       title: getText(context, 'password'),
-                        //       hint: getText(context, 'writePassword'),
-                        //       fillColor: Colors.grey.shade200,
-                        //       obscureText: true,
-                        //       keyboardType: TextInputType.visiblePassword,
-                        //       onChanged: (value) {
-                        //         _userPassword = value;
-
-                        //         setState(() {});
-                        //       },
-                        //     ),
-                        //   ),
-                        // ),
-                        // Visibility(
-                        //   visible: !_forgotPassword,
-                        //   child: ShowUp(
-                        //     delay: delayAmount,
-                        //     child: Container(
-                        //       alignment: customAlignment(context, flip: true),
-                        //       padding: EdgeInsets.all(10.0),
-                        //       child: InkWell(
-                        //         splashColor: kTransparent,
-                        //         highlightColor: kTransparent,
-                        //         onTap: () {
-                        //           _forgotPassword = true;
-                        //           setState(() {});
-                        //         },
-                        //         child: Text(
-                        //           getText(context, 'forgotPassword'),
-                        //           style: kClickableTextStyle,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        Visibility(
+                          visible: !_forgotPassword,
+                          child: ShowUp(
+                            delay: 200,
+                            child: RoundedTextField(
+                              title: getText(context, 'password'),
+                              hint: getText(context, 'writePassword'),
+                              fillColor: Colors.grey.shade200,
+                              obscureText: true,
+                              keyboardType: TextInputType.visiblePassword,
+                              onChanged: (value) => setState(() => controller.passwordChange(value)),
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: !_forgotPassword,
+                          child: ShowUp(
+                            delay: 200,
+                            child: Container(
+                              alignment: customAlignment(context, flip: true),
+                              padding: EdgeInsets.all(10.0),
+                              child: InkWell(
+                                splashColor: kTransparent,
+                                highlightColor: kTransparent,
+                                onTap: () {
+                                  _forgotPassword = true;
+                                  setState(() {});
+                                },
+                                child: Text(
+                                  getText(context, 'forgotPassword'),
+                                  style: kClickableTextStyle,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
               Visibility(
-                visible: true,
-                // visible: _forgotPassword ? validateEmail(_userEmail) : validatePassword(_userPassword) && validateEmail(_userEmail),
+                visible: _forgotPassword ? controller.validEmail : controller.validPassword && controller.validEmail,
                 child: InkWell(
-                  onTap: () async {
-                    signIn();
-                  },
+                  onTap: controller.signIn,
                   child: ShowUp(
-                    delay: delayAmount,
+                    delay: 200,
                     child: Container(
-                      height: 80,
+                      height: 80 + MediaQuery.of(context).padding.bottom,
+                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
                       width: MediaQuery.of(context).size.width,
                       alignment: Alignment.center,
                       color: kFontsColor,
@@ -144,62 +137,32 @@ class _SignInViewState extends State<SignInView> {
               ),
             ],
           ),
-          // Visibility(
-          //   visible: !(_forgotPassword ? validateEmail(_userEmail) : validatePassword(_userPassword) && validateEmail(_userEmail)),
-          //   child: Align(
-          //     alignment: Alignment.bottomCenter,
-          //     child: InkWell(
-          //       onTap: () => replacePage(context, SignUpView.route),
-          //       child: Padding(
-          //         padding: EdgeInsets.symmetric(vertical: 30),
-          //         child: RichText(
-          //           text: TextSpan(
-          //             text: getText(context, "dontHaveAccount"),
-          //             style: TextStyle(color: kFontsColor, fontWeight: FontWeight.w600),
-          //             children: [
-          //               TextSpan(
-          //                 text: " " + getText(context, 'signup'),
-          //                 style: TextStyle(color: Colors.cyan, fontWeight: FontWeight.w700),
-          //               )
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // )
+          Visibility(
+            visible: !(_forgotPassword ? controller.validEmail : controller.validPassword && controller.validEmail),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: InkWell(
+                onTap: () => replacePage(context, SignUpView.route),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  child: RichText(
+                    text: TextSpan(
+                      text: getText(context, "dontHaveAccount"),
+                      style: TextStyle(color: kFontsColor, fontWeight: FontWeight.w600),
+                      children: [
+                        TextSpan(
+                          text: " " + getText(context, 'signup'),
+                          style: TextStyle(color: Colors.cyan, fontWeight: FontWeight.w700),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
-  }
-
-  Future<void> signIn() async {
-    final ProgressDialog pr = ProgressDialog(context);
-    await pr.show();
-    _userEmail.trim();
-    dynamic _result =
-        _forgotPassword ? await _auth.restPasswordByEmail(_userEmail) : await _auth.signInWithEmailAndPassword(_userEmail, _userPassword);
-    await pr.hide();
-    if (_result is String) {
-      // If there is a issue with login
-      AlertDialogBox.showAlert(context, locale: true, message: _result);
-    } else {
-      popPage(context);
-
-      // if (/* await AppSharedPreferences().isFirstLaunch() */ true)
-      //   Navigator.pushReplacement(
-      //     context,
-      //     PageRouteBuilder(
-      //       transitionDuration: Duration(milliseconds: 700),
-      //       transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) =>
-      //           FadeTransition(opacity: animation, child: child),
-      //       pageBuilder: (_, __, ___) => OnboardingScreen(),
-      //     ),
-      //   );
-      // else
-      // Navigator.pushReplacementNamed(context, 'Wrapper');
-      // Navigator.pushReplacementNamed(context, Wrapper.route);
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => MainView()));
-    }
   }
 }
