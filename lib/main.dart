@@ -54,22 +54,25 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthService().user,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        locale: _locale,
-        supportedLocales: appSupportedLocales,
-        localizationsDelegates: [
-          AppLocalization.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate
-        ],
-        theme: ThemeData(
-          scaffoldBackgroundColor: kBackground,
-          fontFamily: 'DinNext',
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          locale: _locale,
+          supportedLocales: appSupportedLocales,
+          localizationsDelegates: [
+            AppLocalization.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate
+          ],
+          theme: ThemeData(
+            scaffoldBackgroundColor: kBackground,
+            fontFamily: 'DinNext',
+          ),
+          onGenerateRoute: Platform.isIOS ? Routes.cupertinoRoutes : Routes.materialRoutes,
+          home: SplashScreen(),
         ),
-        onGenerateRoute: Platform.isIOS ? Routes.cupertinoRoutes : Routes.materialRoutes,
-        home: SplashScreen(),
       ),
     );
   }
