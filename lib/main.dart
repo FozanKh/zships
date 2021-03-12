@@ -37,10 +37,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark,
-      statusBarColor: kTransparent,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.light,
+        statusBarColor: kTransparent,
+      ),
+    );
     super.initState();
   }
 
@@ -67,9 +70,11 @@ class _MyAppState extends State<MyApp> {
             GlobalCupertinoLocalizations.delegate
           ],
           theme: ThemeData(
-            scaffoldBackgroundColor: kBackground,
-            fontFamily: 'DinNext',
-          ),
+              scaffoldBackgroundColor: kBackground,
+              fontFamily: 'DinNext',
+              appBarTheme: AppBarTheme(
+                brightness: Brightness.light,
+              )),
           onGenerateRoute: Platform.isIOS ? Routes.cupertinoRoutes : Routes.materialRoutes,
           home: SplashScreen(),
         ),
