@@ -57,13 +57,14 @@ class _SignInViewState extends State<SignInView> {
                           child: RichText(
                             textAlign: TextAlign.center,
                             text: TextSpan(
-                                text: (_forgotPassword ? getText(context, 'resetPassword') : getText(context, 'signIn')) + '\n',
-                                style: kLabelTS,
-                                children: [
-                                  TextSpan(
-                                      text: _forgotPassword ? getText(context, 'All Under Control') : getText(context, 'welcomeBack'),
-                                      style: kTitleTS.copyWith(fontSize: 25))
-                                ]),
+                              text: (_forgotPassword ? getText(context, 'resetPassword') : getText(context, 'signIn')) + '\n',
+                              style: kLabelTS,
+                              children: [
+                                TextSpan(
+                                    text: _forgotPassword ? getText(context, 'All Under Control') : getText(context, 'welcomeBack'),
+                                    style: kTitleTS.copyWith(fontSize: 25))
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(height: 20),
