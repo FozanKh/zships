@@ -21,7 +21,7 @@ class Titled extends StatelessWidget {
         if (title != null)
           Container(
             alignment: customAlignment(context),
-            padding: EdgeInsets.symmetric(horizontal: largeTitle ? 20 : 10),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -32,7 +32,7 @@ class Titled extends StatelessWidget {
                       TextStyle(
                         fontWeight: largeTitle ? FontWeight.w700 : null,
                         color: titleColor ?? largeTitle ? kFontsColor : Colors.grey,
-                        fontSize: largeTitle ? 24 : 12,
+                        fontSize: largeTitle ? 20 : 12,
                       ),
                 ),
                 if (titleIcon != null) titleIcon
@@ -40,7 +40,7 @@ class Titled extends StatelessWidget {
             ),
           ),
         if (title != null) SizedBox(height: 5),
-        child
+        if (child != null) child
       ],
     );
   }

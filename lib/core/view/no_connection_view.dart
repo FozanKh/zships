@@ -22,7 +22,7 @@ class NoConnectionView extends StatelessWidget {
             children: [
               Hero(
                 tag: 'logo',
-                child: Image.asset(kMenudLogoAsset),
+                child: Image.asset(kZShipLogo),
               ),
               Lottie.asset(kLottieNoConnectionAsset, alignment: Alignment.center, height: 300, width: 300),
               Text(
