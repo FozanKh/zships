@@ -13,7 +13,7 @@ const kBorderRadiusXLarge = BorderRadius.all(Radius.circular(20));
 const kBorderRadiusXXLarge = BorderRadius.all(Radius.circular(25));
 final kBoxShadow = [BoxShadow(blurRadius: 7, color: Colors.black.withOpacity(0.07), offset: Offset(0, 6))];
 final kBoxShadowLight = [BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.05), offset: Offset(0, 6))];
-const kBoxShadowDark = [BoxShadow(blurRadius: 7, color: Colors.black12, offset: Offset(0, 6))];
+const kBoxShadowDark = [BoxShadow(blurRadius: 7, color: Colors.black12)];
 const kBlueButtonColor = Color(0xFF3568D4);
 
 /// [TextStyles]
