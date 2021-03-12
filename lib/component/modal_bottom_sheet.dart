@@ -82,8 +82,8 @@ modalBottomSheet(context, {@required Widget child, String title, bool locale = f
           Container(
             padding: EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
-              boxShadow: [BoxShadow(color: kLight4, blurRadius: 5, offset: Offset(0, 10))],
-              color: kLight4,
+              boxShadow: [BoxShadow(color: kBackground, blurRadius: 5, offset: Offset(0, 10))],
+              color: kBackground,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

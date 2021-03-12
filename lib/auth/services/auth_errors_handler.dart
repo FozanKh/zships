@@ -1,4 +1,4 @@
-import 'package:zships/core/model/extensions.dart';
+import 'package:zships/constants/extensions.dart';
 
 String authErrorsHandler(String errorCode) {
   String errorMessage;

@@ -151,9 +151,6 @@ class AuthService {
   Future signOut() async {
     try {
       AppSharedPreferences.instance.clearUserData();
-      // NotificationsHelper.instance.dispose();
-      // globals.clear();
-      // AppSharedPreferences().setUid("");
       return await _auth.signOut();
     } catch (e) {
       return e.message;
