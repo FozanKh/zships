@@ -79,9 +79,15 @@ class _RoundedTextFieldState extends State<RoundedTextField> {
   }
 
   @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: widget.margin ?? EdgeInsets.symmetric(vertical: 5),
+      padding: widget.margin ?? EdgeInsets.zero,
       child: Titled(
         title: widget.title,
         child: Container(
