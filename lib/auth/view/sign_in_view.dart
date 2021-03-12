@@ -74,6 +74,7 @@ class _SignInViewState extends State<SignInView> {
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (value) => setState(() => controller.emailChange(value)),
                         ),
+                        SizedBox(height: 20),
                         Visibility(
                           visible: !_forgotPassword,
                           child: ShowUp(
@@ -103,7 +104,7 @@ class _SignInViewState extends State<SignInView> {
                                   setState(() {});
                                 },
                                 child: Text(
-                                  getText(context, 'forgotPassword'),
+                                  getText(context, 'Forgot Password'),
                                   style: kClickableTS,
                                 ),
                               ),
@@ -151,7 +152,7 @@ class _SignInViewState extends State<SignInView> {
                       style: TextStyle(color: kFontsColor, fontWeight: FontWeight.w600),
                       children: [
                         TextSpan(
-                          text: " " + getText(context, 'signup'),
+                          text: " " + getText(context, 'signUp'),
                           style: TextStyle(color: Colors.cyan, fontWeight: FontWeight.w700),
                         )
                       ],
