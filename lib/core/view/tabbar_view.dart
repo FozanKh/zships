@@ -8,8 +8,9 @@ import 'package:zships/home/view/home_view.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:zships/service/api/api_service.dart';
 import 'package:zships/service/database.dart';
-import 'package:zships/service/shared_preferences.dart';
 import 'package:zships/settings/view/setting_view.dart';
+import 'package:zships/ship/view/ship_view.dart';
+import 'package:zships/track/view/track_view.dart';
 
 class TabBarScreen extends StatefulWidget {
   static const String route = 'TabBarScreen';
@@ -28,6 +29,8 @@ class _TabBarScreenState extends State<TabBarScreen> {
   List<Widget> _pages;
   Widget _homePage;
   Widget _settingsPage;
+  Widget _trackingPage;
+  Widget _shipPage;
 
   int _currentIndex;
 
@@ -35,7 +38,9 @@ class _TabBarScreenState extends State<TabBarScreen> {
   void initState() {
     _homePage = HomeView();
     _settingsPage = SettingView();
-    _pages = [_homePage, _homePage, _settingsPage];
+    _trackingPage = TrackView();
+    _shipPage = ShipView();
+    _pages = [_homePage, _shipPage, _homePage, _trackingPage, _settingsPage];
     _currentIndex = 0;
     getKey();
     super.initState();
@@ -44,10 +49,6 @@ class _TabBarScreenState extends State<TabBarScreen> {
   getKey() async {
     String key = await DatabaseService.instance.getUserKey(newUid: Provider.of<User>(context, listen: false).uid);
     ApiService.instance.key = key;
-    // if (key == null) {
-    // key = await DatabaseService.instance.getUserKey(newUid: Provider.of<User>(context, listen: false).uid);
-    // }
-    // AppSharedPreferences.instance.saveKey(key);
   }
 
   @override
@@ -65,13 +66,14 @@ class _TabBarScreenState extends State<TabBarScreen> {
           currentIndex: _currentIndex,
           iconSize: 20,
           items: <BottomNavigationBarItem>[
-            // TODO: Translate these
             BottomNavigationBarItem(icon: Icon(Icons.home), label: getText(context, 'Home')),
-            BottomNavigationBarItem(icon: Icon(Icons.calculate, color: kTransparent), label: getText(context, 'Rate Calculator')),
+            BottomNavigationBarItem(icon: Icon(Icons.local_shipping), label: getText(context, 'ship')),
+            BottomNavigationBarItem(icon: Icon(Icons.calculate, color: kTransparent), label: getText(context, 'Calculator')),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: getText(context, 'track')),
             BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: getText(context, 'More')),
           ],
           onTap: (index) => setState(() {
-            if (index != 1) return _currentIndex = index;
+            if (index != 2) return _currentIndex = index;
           }),
         ),
         body: IndexedStack(index: _currentIndex, children: _pages),

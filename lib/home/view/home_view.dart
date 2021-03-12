@@ -3,9 +3,8 @@ import 'package:zships/component/diffuser.dart';
 import 'package:zships/component/rounded_button.dart';
 import 'package:zships/component/rounded_text_field.dart';
 import 'package:zships/constants/colors.dart';
-import 'package:zships/core/model/shipment.dart';
-import 'package:zships/globals.dart';
 import 'package:zships/home/component/home_appbar.dart';
+import 'package:zships/ship_engine/models/se_shipment.dart';
 import 'package:zships/shipments/component/shipment_card.dart';
 import 'package:zships/home/controller/home_controller.dart';
 import 'package:zships/localization/constants.dart';
@@ -16,7 +15,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  Shipment shipment;
+  ShipmentSE shipment;
   HomeController controller;
   @override
   void initState() {
@@ -30,8 +29,8 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeAppBar(),
-      body: allShipments.length <= 0
+      appBar: CustomAppBar(context),
+      body: controller.allShipments.length <= 0
           ? Padding(
               padding: EdgeInsets.all(40.0),
               child: !controller.shipmentsLoaded
@@ -51,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: RoundedTextField(
-                    hint: getText(context, 'Track Number or ID'),
+                    hint: getText(context, 'Names or Track number'),
                     margin: EdgeInsets.only(top: 10),
                     trailingIcon: Icons.search,
                     onChanged: controller.search,
@@ -60,11 +59,14 @@ class _HomeViewState extends State<HomeView> {
                 if (controller.filteredShipments.length > 0)
                   Expanded(
                     child: Diffuser(
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.fromLTRB(15, 0, 15, 100),
-                        child: Column(
-                          children: List.generate(
-                              controller.filteredShipments.length, (index) => ShipmentCard(shipment: controller.filteredShipments[index])),
+                      child: RefreshIndicator(
+                        onRefresh: () {
+                          return controller.loadShipments();
+                        },
+                        child: ListView.builder(
+                          padding: EdgeInsets.fromLTRB(15, 0, 15, 100),
+                          itemCount: controller.filteredShipments.length,
+                          itemBuilder: (context, index) => ShipmentCard(shipment: controller.filteredShipments[index]),
                         ),
                       ),
                     ),

@@ -52,7 +52,7 @@ class _UpdateApiKey extends State<UpdateApiKey> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(getText(context, 'Start Your ships!'),
-                            style: kTitleTextStyle.copyWith(fontSize: 25, color: kFontsColor), textAlign: TextAlign.center),
+                            style: kTitleTS.copyWith(fontSize: 25, color: kFontsColor), textAlign: TextAlign.center),
                         SizedBox(height: 20),
                         RoundedTextField(
                           title: getText(context, 'API Key'),

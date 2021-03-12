@@ -1,43 +1,60 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-import 'package:zships/auth/model/user.dart';
-import 'package:zships/core/model/rate.dart';
-import 'package:zships/core/model/shipment.dart';
+import 'package:zships/component/alertDialog.dart';
+import 'package:zships/component/progress_indicator.dart';
+import 'package:zships/constants/validate.dart';
 import 'package:zships/service/api/api_service.dart';
+import 'package:zships/ship_engine/models/rate/se_rate.dart';
+import 'package:zships/ship_engine/models/se_shipment.dart';
+import 'package:zships/shipments/component/rate_row.dart';
+import 'package:zships/shipments/controller/rating_legends.dart';
 
 class RateController {
   BuildContext context;
-  TextEditingController fromZipController;
-  TextEditingController toZipController;
-  TextEditingController toWeightController;
-  Shipment shipment;
-  List<Rate> rates;
+  TextEditingController fromPostalController;
+  TextEditingController toPostalController;
+  TextEditingController weightController;
+  ShipmentSE shipment;
+  List<RateSE> rates;
 
   RateController(this.context) {
-    fromZipController = TextEditingController();
-    toZipController = TextEditingController();
+    fromPostalController = TextEditingController();
+    toPostalController = TextEditingController();
+    weightController = TextEditingController();
   }
 
-  calculateRate() async {
-    String key = Provider.of<User>(context, listen: false).apiKey;
-    shipment = await ApiService.instance.sampleRate(fromZipController.text, toZipController.text);
-    print(shipment);
+  Future<void> calculateRate() async {
+    if (!safeIsNotEmpty(fromPostalController.text)) {
+      AlertDialogBox.showAlert(context, message: 'Please fill from address Postal code');
+    } else if (!safeIsNotEmpty(toPostalController.text)) {
+      AlertDialogBox.showAlert(context, message: 'Please fill to address Postal code');
+    } else if (!safeIsNotEmpty(weightController.text)) {
+      AlertDialogBox.showAlert(context, message: "Please fill the shipment's weight");
+    } else {
+      ProgressDialog pr = ProgressDialog(context);
+      await pr.show();
+      try {
+        rates = await ApiService.instance.estimateRate(
+            fromPostalCode: fromPostalController.text.trim(), toPostalCode: toPostalController.text.trim(), weight: weightController.text.trim());
+        await pr.hide();
+      } catch (e) {
+        await pr.hide();
+        AlertDialogBox.showAlert(context, message: e.toString());
+      }
+    }
   }
 
   List<Widget> getRates() {
     List<Widget> ratesWidget = [];
-    TextStyle textStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
-    shipment.rates.forEach((rate) {
-      var row = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text('${rate.carrier}', style: textStyle),
-          rate.estDeliveryDays != null ? Text('${rate.estDeliveryDays} days', style: textStyle) : SizedBox(),
-          Text('${rate.rate} ${rate.currency}', style: textStyle),
-        ],
-      );
-      ratesWidget.add(row);
+    ratesWidget.add(RatingLegends(context: context));
+    rates.forEach((rate) {
+      ratesWidget.add(RateRow(rate: rate));
     });
     return ratesWidget;
+  }
+
+  void dispose() {
+    fromPostalController.dispose();
+    toPostalController.dispose();
+    weightController.dispose();
   }
 }

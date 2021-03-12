@@ -155,10 +155,9 @@ class _BodyState extends State<_Body> {
 
   timeOut() async {
     await Future.delayed(Duration(seconds: _timeout));
-
     if (_isShowing == true) {
       Navigator.pop(context);
-      AlertDialogBox.showAlert(context, message: 'sorryError', locale: true);
+      AlertDialogBox.showAlert(context, message: 'Unknown Error has occur, please try again', locale: true);
     }
   }
 

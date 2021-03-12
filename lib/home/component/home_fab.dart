@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zships/component/bounce.dart';
 import 'package:zships/component/modal_bottom_sheet.dart';
 import 'package:zships/constants/colors.dart';
-import 'package:zships/shipments/view/rate_calculator.dart';
+import 'package:zships/shipments/view/rate_calculator_view.dart';
 
 class HomeFAB extends StatelessWidget {
   @override

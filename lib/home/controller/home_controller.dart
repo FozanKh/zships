@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:zships/component/alertDialog.dart';
 import 'package:zships/component/progress_indicator.dart';
 import 'package:zships/constants/validate.dart';
-import 'package:zships/core/model/shipment.dart';
-import 'package:zships/globals.dart';
 import 'package:zships/service/api/api_service.dart';
+import 'package:zships/ship_engine/models/se_shipment.dart';
 
 // ignore: invalid_use_of_protected_member
 class HomeController {
   final BuildContext context;
   final State client;
   bool _shipmentsLoaded = false;
-  List<Shipment> filteredShipments = [];
+  List<ShipmentSE> allShipments = [];
+  List<ShipmentSE> filteredShipments = [];
   bool get shipmentsLoaded => _shipmentsLoaded;
 
   HomeController(this.context, this.client) {
@@ -22,14 +22,18 @@ class HomeController {
   Future<void> loadShipments({bool force = false}) async {
     ProgressDialog pr = ProgressDialog(context);
     if (force) await pr.show();
-    if (ApiService.instance.key == null) await Future.delayed(Duration(seconds: 2));
-    await ApiService.instance.retrieveAllShipment();
-    _shipmentsLoaded = true;
-    filteredShipments.clear();
-    filteredShipments.addAll(allShipments);
-    client.setState(() {});
-    if (force) await pr.hide();
-
+    try {
+      if (ApiService.instance.key == null) await Future.delayed(Duration(seconds: 2));
+      allShipments = await ApiService.instance.fetchAllShipment();
+      _shipmentsLoaded = true;
+      filteredShipments.clear();
+      filteredShipments.addAll(allShipments);
+      client.setState(() {});
+      if (force) await pr.hide();
+    } catch (e) {
+      if (force) await pr.hide();
+      AlertDialogBox.showAlert(context, message: e.toString());
+    }
     if (!safeListIsNotEmpty(allShipments)) {
       if (await checkConnection() == false)
         AlertDialogBox.showAlert(context, message: "Please check your internet and try again");
@@ -39,13 +43,14 @@ class HomeController {
   }
 
   void search(String value) {
-    print(filteredShipments);
     filteredShipments.clear();
-    print(filteredShipments);
     if (safeIsNotEmpty(value)) {
       print('searching');
       allShipments.forEach((shipment) {
-        if (shipment.trackingCode.startsWith(value) || shipment.id.startsWith(value)) filteredShipments.add(shipment);
+        if (shipment.shipFrom.name.startsWith(value) ||
+            shipment.shipTo.name.startsWith(value) ||
+            (shipment.labels?.first?.trackingNumber?.startsWith(value) ?? false) ||
+            shipment.shipmentId.startsWith(value)) filteredShipments.add(shipment);
       });
     } else {
       filteredShipments.addAll(allShipments);

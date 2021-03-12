@@ -9,5 +9,6 @@ class ApiEndPoints {
       return _instance;
   }
 
-  String baseUrl ='https://api.easypost.com/';
+  String epBaseUrl = 'https://api.easypost.com/';
+  String seBaseUrl = 'https://api.shipengine.com/v1/';
 }

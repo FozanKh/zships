@@ -9,11 +9,9 @@ import 'package:zships/auth/services/auth.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/core/model/app_routes.dart';
 import 'package:zships/core/view/splash_screen.dart';
-import 'package:zships/globals.dart' as globals;
 import 'package:zships/localization/app_localization.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:provider/provider.dart';
-import 'package:timeago/timeago.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

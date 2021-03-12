@@ -35,9 +35,8 @@ class AuthService {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
-  // sign in anonymously
   Future preLunchHome() async {
-    // TODO: Before Launch Actions
+    // Before Launch Actions
   }
 
   /// [Sign in] with [Email] and [Password]
@@ -46,23 +45,6 @@ class AuthService {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       await preLunchHome();
-    } catch (e) {
-      return authErrorsHandler(e.code);
-    }
-  }
-
-  Future restPasswordByEmail(String email) async {
-    try {
-      var errors;
-      await _auth.sendPasswordResetEmail(email: email).catchError((onError) {
-        errors = onError.code;
-        print(errors);
-      });
-      if (errors == null) {
-        return ("emailSent");
-      } else {
-        return authErrorsHandler(errors);
-      }
     } catch (e) {
       return authErrorsHandler(e.code);
     }
@@ -115,7 +97,7 @@ class AuthService {
     return error;
   }
 
-  /// [Sign in] with [Credentials]
+  /// [Sign in] with [Credentials] Used with [Phone Number]
   Future signInWithCredential(auth.AuthCredential authCredential) async {
     try {
       await _auth.signInWithCredential(authCredential);
@@ -128,7 +110,7 @@ class AuthService {
     }
   }
 
-  // update user email
+  // Update user password
   Future updatePassword(String newPassword, String oldPassword, String email) async {
     try {
       var errors;
@@ -151,9 +133,6 @@ class AuthService {
   Future signOut() async {
     try {
       AppSharedPreferences.instance.clearUserData();
-      // NotificationsHelper.instance.dispose();
-      // globals.clear();
-      // AppSharedPreferences().setUid("");
       return await _auth.signOut();
     } catch (e) {
       return e.message;

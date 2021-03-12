@@ -84,7 +84,7 @@ class AlertDialogBox {
               title: title != ''
                   ? Text(
                       locale ? getText(context, title) : title,
-                      style: kMidTitleTextStyle,
+                      style: kMidTitleTS,
                       textAlign: TextAlign.center,
                     )
                   : null,
@@ -155,7 +155,7 @@ class AlertDialogBox {
             title: title != ''
                 ? Text(
                     locale ? getText(context, title) : title,
-                    style: kMidTitleTextStyle,
+                    style: kMidTitleTS,
                     textAlign: TextAlign.center,
                   )
                 : null,

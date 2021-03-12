@@ -58,11 +58,11 @@ class _SignInViewState extends State<SignInView> {
                             textAlign: TextAlign.center,
                             text: TextSpan(
                                 text: (_forgotPassword ? getText(context, 'resetPassword') : getText(context, 'signIn')) + '\n',
-                                style: kLabelTextStyle,
+                                style: kLabelTS,
                                 children: [
                                   TextSpan(
                                       text: _forgotPassword ? getText(context, 'All Under Control') : getText(context, 'welcomeBack'),
-                                      style: kTitleTextStyle.copyWith(fontSize: 25))
+                                      style: kTitleTS.copyWith(fontSize: 25))
                                 ]),
                           ),
                         ),
@@ -104,7 +104,7 @@ class _SignInViewState extends State<SignInView> {
                                 },
                                 child: Text(
                                   getText(context, 'forgotPassword'),
-                                  style: kClickableTextStyle,
+                                  style: kClickableTS,
                                 ),
                               ),
                             ),

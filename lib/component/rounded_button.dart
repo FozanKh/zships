@@ -44,7 +44,7 @@ class RoundedButton extends StatelessWidget {
               padding: padding ?? EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
               decoration: BoxDecoration(
                 borderRadius: borderRadius ?? kBorderRadius,
-                color: borderColor == null ? buttonColor ?? kFontsColor : kTransparent,
+                color: borderColor == null ? buttonColor ?? kButtonColor : kTransparent,
                 border: borderColor != null ? Border.all(color: borderColor, width: 2) : null,
               ),
               child: Text(title,
@@ -60,7 +60,7 @@ class RoundedButton extends StatelessWidget {
               padding: padding ?? EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
               decoration: BoxDecoration(
                 borderRadius: borderRadius ?? kBorderRadius,
-                color: borderColor == null ? buttonColor ?? kFontsColor : kTransparent,
+                color: borderColor == null ? buttonColor ?? kButtonColor : kTransparent,
                 border: borderColor != null ? Border.all(color: borderColor, width: 2) : null,
               ),
               child: Text(title,

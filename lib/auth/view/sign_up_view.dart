@@ -57,8 +57,8 @@ class _SignUpViewState extends State<SignUpView> {
                             textAlign: TextAlign.center,
                             text: TextSpan(
                                 text: getText(context, 'signUp') + '\n',
-                                style: kLabelTextStyle,
-                                children: [TextSpan(text: getText(context, 'Welcome To The Family'), style: kTitleTextStyle.copyWith(fontSize: 25))]),
+                                style: kLabelTS,
+                                children: [TextSpan(text: getText(context, 'Welcome To The Family'), style: kTitleTS.copyWith(fontSize: 25))]),
                           ),
                         ),
                         SizedBox(height: 20),

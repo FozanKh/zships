@@ -30,14 +30,6 @@ abstract class Routes {
         return MaterialPageRoute(builder: (_) => NoConnectionView(), settings: settings);
       case ShipmentView.route:
         return MaterialPageRoute(builder: (_) => ShipmentView(shipment: args['shipment']), settings: settings);
-      // case RateCalculatorView.route:
-      //   return MaterialPageRoute(builder: (_) => RateCalculatorView(), settings: settings);
-      // case OrderView.route:
-      //   return MaterialPageRoute(builder: (_) => OrderView(order: args['order']), settings: settings);
-      // case RestaurantView.route:
-      //   return MaterialPageRoute(builder: (_) => RestaurantView(restaurant: args['restaurant']), settings: settings);
-      // case SettingView.route:
-      //   return MaterialPageRoute(builder: (_) => SettingView(), settings: settings);
       case TabBarScreen.route:
         return MaterialPageRoute(builder: (_) => TabBarScreen(), settings: settings);
       default:
@@ -64,14 +56,6 @@ abstract class Routes {
         return CupertinoPageRoute(builder: (_) => NoConnectionView(), settings: settings);
       case ShipmentView.route:
         return CupertinoPageRoute(builder: (_) => ShipmentView(shipment: args['shipment']), settings: settings);
-      // case RateCalculatorView.route:
-      //   return CupertinoPageRoute(builder: (_) => RateCalculatorView(), settings: settings);
-      // case OrderView.route:
-      //   return CupertinoPageRoute(builder: (_) => OrderView(order: args['order']), settings: settings);
-      // case RestaurantView.route:
-      //   return CupertinoPageRoute(builder: (_) => RestaurantView(restaurant: args['restaurant']), settings: settings);
-      // case SettingView.route:
-      //   return CupertinoPageRoute(builder: (_) => SettingView(), settings: settings);
       case TabBarScreen.route:
         return CupertinoPageRoute(builder: (_) => TabBarScreen(), settings: settings);
       default:
