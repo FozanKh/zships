@@ -80,7 +80,7 @@ class _SignUpViewState extends State<SignUpView> {
                               ),
                             ),
                           ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 20),
                         RoundedTextField(
                           title: getText(context, 'password'),
                           hint: getText(context, 'writePassword'),
@@ -138,7 +138,7 @@ class _SignUpViewState extends State<SignUpView> {
                       style: TextStyle(color: kFontsColor, fontWeight: FontWeight.w600),
                       children: [
                         TextSpan(
-                          text: " " + getText(context, 'signin'),
+                          text: " " + getText(context, 'Sign In'),
                           style: TextStyle(color: Colors.cyan, fontWeight: FontWeight.w700),
                         )
                       ],
