@@ -65,11 +65,6 @@ class _SettingViewState extends State<SettingView> {
                   onTap: () => controller.logout(),
                 ),
               SettingCard(
-                title: getText(context, 'testApi'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.createSampleShipment(),
-              ),
-              SettingCard(
                 title: getText(context, 'Sample rate'),
                 icon: FzIcons.privacy_policy,
                 onTap: () => ApiService.instance.rateByShipmentId(),
@@ -78,11 +73,6 @@ class _SettingViewState extends State<SettingView> {
                 title: getText(context, 'Getting Shipments'),
                 icon: FzIcons.privacy_policy,
                 onTap: () => ApiService.instance.fetchAllShipment(),
-              ),
-              SettingCard(
-                title: getText(context, 'Create label'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.createLabel(),
               ),
               SettingCard(
                 title: getText(context, 'Estimate Rate'),

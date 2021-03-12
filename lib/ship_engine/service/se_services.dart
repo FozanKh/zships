@@ -181,12 +181,14 @@ class ShipEngineServices {
   Future<bool> validateResponse(http.Response res) async {
     log('Response status code = ${res.statusCode}');
     if (await checkConnection() == false) throw ('Please check your internet connection and try again');
-
+    log(res.body);
     switch (res.statusCode) {
       case 200:
         return true;
       case 201:
         return true;
+      case 400:
+        throw ('${jsonDecode(res.body)['errors'].first["message"]}');
       case 401:
         throw ('Error, invalid API key, update you API key from settings');
       case 405:

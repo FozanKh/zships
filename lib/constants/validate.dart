@@ -44,6 +44,14 @@ bool validateApiKey(String value) {
   return true;
 }
 
+bool validatePostalCode(String value) {
+  String pattern = r'^[0-9]{5}(?:-[0-9]{4})?$';
+
+  RegExp regExp = RegExp(pattern);
+
+  return regExp.hasMatch(value);
+}
+
 String errorMessage(ValidationErrorType type) {
   if (type == ValidationErrorType.password) {
     return 'RequestValidPassword';

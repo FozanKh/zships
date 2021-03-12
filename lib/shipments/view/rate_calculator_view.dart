@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:zships/component/rounded_button.dart';
 import 'package:zships/component/rounded_text_field.dart';

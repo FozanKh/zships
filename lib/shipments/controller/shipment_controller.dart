@@ -38,7 +38,7 @@ class ShipmentController {
       await pr.hide();
       AlertDialogBox.showAlert(context, message: e.toString());
     }
-    log(shipment.labels.first.trackingNumber);
+    log(shipment.labels?.first?.trackingNumber ?? '');
     return;
   }
 }
