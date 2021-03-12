@@ -35,10 +35,7 @@ class HomeController {
       AlertDialogBox.showAlert(context, message: e.toString());
     }
     if (!safeListIsNotEmpty(allShipments)) {
-      if (await checkConnection() == false)
-        AlertDialogBox.showAlert(context, message: "Please check your internet and try again");
-      else
-        AlertDialogBox.showAlert(context, message: "Sorry there has been an error, please check that your api key is correct from the settings");
+      if (await checkConnection() == false) AlertDialogBox.showAlert(context, message: "Please check your internet and try again");
     }
   }
 

@@ -40,7 +40,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
     _settingsPage = SettingView();
     _trackingPage = TrackView();
     _shipPage = ShipView();
-    _pages = [_homePage, _shipPage, _homePage, _trackingPage, _settingsPage];
+    _pages = [_homePage, _shipPage, Container(), _trackingPage, _settingsPage];
     _currentIndex = 0;
     getKey();
     super.initState();
