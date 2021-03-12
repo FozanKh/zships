@@ -1,6 +1,6 @@
-import 'package:zships/core/model/fees.dart';
-import 'package:zships/core/model/tracking/carrier_details.dart';
-import 'package:zships/core/model/tracking/tracking_detailes.dart';
+import 'package:zships/core/model/archived/fees.dart';
+import 'package:zships/core/model/archived/tracking/carrier_details.dart';
+import 'package:zships/core/model/archived/tracking/tracking_detailes.dart';
 
 class Tracker {
   String id;

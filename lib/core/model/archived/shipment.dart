@@ -1,10 +1,10 @@
-import 'package:zships/core/model/address/address.dart';
-import 'package:zships/core/model/fees.dart';
-import 'package:zships/core/model/options.dart';
-import 'package:zships/core/model/parcel.dart';
-import 'package:zships/core/model/postage_label.dart';
-import 'package:zships/core/model/rate.dart';
-import 'package:zships/core/model/tracking/tracker.dart';
+import 'package:zships/core/model/archived/address/address.dart';
+import 'package:zships/core/model/archived/fees.dart';
+import 'package:zships/core/model/archived/options.dart';
+import 'package:zships/core/model/archived/parcel.dart';
+import 'package:zships/core/model/archived/postage_label.dart';
+import 'package:zships/core/model/archived/rate.dart';
+import 'package:zships/core/model/archived/tracking/tracker.dart';
 
 class Shipment {
   List<String> messages;

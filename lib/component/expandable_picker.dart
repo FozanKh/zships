@@ -171,7 +171,7 @@ class ExpandablePickerState extends State<ExpandablePicker> with SingleTickerPro
                               width: double.infinity,
                               margin: EdgeInsets.symmetric(vertical: 7.5),
                               alignment: customAlignment(context),
-                              child: Text(getText(context, widget.options[index]), style: kCGradeSelection.copyWith(fontSize: 16)),
+                              child: Text(getText(context, widget.options[index]), style: TextStyle(fontSize: 16)),
                             ),
                           ),
                   ),

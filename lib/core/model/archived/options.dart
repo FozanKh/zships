@@ -1,4 +1,4 @@
-import 'package:zships/core/model/payment.dart';
+import 'package:zships/core/model/archived/payment.dart';
 
 class Options {
   String currency;

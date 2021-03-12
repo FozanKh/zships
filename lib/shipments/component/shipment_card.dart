@@ -68,7 +68,7 @@ class ShipmentCard extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: kPrimary1,
+                  color: Colors.blue,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
                   boxShadow: kBoxShadow,
                 ),

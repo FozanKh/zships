@@ -64,36 +64,6 @@ class _SettingViewState extends State<SettingView> {
                   titleColor: kRed0,
                   onTap: () => controller.logout(),
                 ),
-              SettingCard(
-                title: getText(context, 'Sample rate'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.rateByShipmentId(),
-              ),
-              SettingCard(
-                title: getText(context, 'Getting Shipments'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.fetchAllShipment(),
-              ),
-              SettingCard(
-                title: getText(context, 'Estimate Rate'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ApiService.instance.estimateRate(),
-              ),
-              SettingCard(
-                title: getText(context, 'Track by label'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ShipEngineServices.instance.trackByLabelId('se-47032648'),
-              ),
-              SettingCard(
-                title: getText(context, 'Shipment Label'),
-                icon: FzIcons.privacy_policy,
-                onTap: () => ShipEngineServices.instance.getLabelByShipmentId(shipmentId: 'se-88294276').then((value) => print(value.first.labelId)),
-              ),
-              // SettingCard(
-              //   title: getText(context, 'helloF'),
-              //   icon: FzIcons.privacy_policy,
-              //   onTap: () => ApiService.instance.buyShipment(),
-              // ),
             ],
           ),
         ),

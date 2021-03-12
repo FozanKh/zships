@@ -1,4 +1,4 @@
-import 'package:zships/core/model/tracking/tracking_location.dart';
+import 'package:zships/core/model/archived/tracking/tracking_location.dart';
 
 class CarrierDetail {
 	String object;

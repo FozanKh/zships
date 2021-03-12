@@ -5,45 +5,6 @@ import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/decorations.dart';
 import 'package:zships/localization/constants.dart';
 
-// modalBottomSheet(context, {@required Widget child, @required String title}) {
-//   showModalBottomSheet(
-//     isScrollControlled: true,
-//     // elevation: 10,
-//     useRootNavigator: true,
-//     backgroundColor: Colors.transparent,
-//     context: context,
-//     builder: (context) => SingleChildScrollView(
-//       child: Container(
-//         decoration: BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(10)), color: Colors.white),
-//         margin: EdgeInsets.only(top: 100),
-//         padding: EdgeInsets.only(top: 30, bottom: MediaQuery.of(context).viewInsets.bottom, right: 20, left: 20),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.start,
-//           children: <Widget>[
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: <Widget>[
-//                 Text(title, style: kSubTitle),
-//                 ActionButton(
-//                   title: getText(context, 'cancel'),
-//                   onTap: () {
-//                     Navigator.pop(context);
-//                   },
-//                 )
-//               ],
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.all(30),
-//               child: child,
-//             ),
-//             SizedBox(height: 30)
-//           ],
-//         ),
-//       ),
-//     ),
-//   );
-// }
-
 modalBottomSheet(context, {@required Widget child, String title, bool locale = false, bool fullHeight = false}) {
   showModalBottomSheet(
     isScrollControlled: true,
@@ -116,16 +77,6 @@ modalBottomSheet(context, {@required Widget child, String title, bool locale = f
               ],
             ),
           ),
-          // Align(
-          //   alignment: Alignment.bottomCenter,
-          //   child: Container(
-          //     height: kCardHeight + 10,
-          //     child: RoundedButton(
-          //       title: getText(context, 'cancel'),
-          //       onTap: () => Navigator.pop(context),
-          //     ),
-          //   ),
-          // )
         ],
       ),
     ),
