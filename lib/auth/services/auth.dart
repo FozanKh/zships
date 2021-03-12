@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:zships/auth/model/user.dart';
 import 'package:zships/auth/services/auth_errors_handler.dart';
+import 'package:zships/service/api/api_service.dart';
 import 'package:zships/service/database.dart';
 import 'package:zships/service/shared_preferences.dart';
+import 'package:zships/ship_engine/service/se_services.dart';
 
 class AuthService {
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
@@ -130,9 +132,28 @@ class AuthService {
     }
   }
 
+  Future restPasswordByEmail(String email) async {
+    try {
+      var errors;
+      await _auth.sendPasswordResetEmail(email: email).catchError((onError) {
+        errors = onError.code;
+        print(errors);
+      });
+      if (errors == null) {
+        return ("emailSent");
+      } else {
+        return authErrorsHandler(errors);
+      }
+    } catch (e) {
+      return authErrorsHandler(e.code);
+    }
+  }
+
   Future signOut() async {
     try {
       AppSharedPreferences.instance.clearUserData();
+      ApiService.instance.key = null;
+      ShipEngineServices.instance.key = null;
       return await _auth.signOut();
     } catch (e) {
       return e.message;

@@ -118,7 +118,7 @@ class _SignInViewState extends State<SignInView> {
               Visibility(
                 visible: _forgotPassword ? controller.validEmail : controller.validPassword && controller.validEmail,
                 child: InkWell(
-                  onTap: controller.signIn,
+                  onTap: () => _forgotPassword ? controller.restPassword() : controller.signIn(),
                   child: ShowUp(
                     delay: 200,
                     child: Container(

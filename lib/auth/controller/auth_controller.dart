@@ -66,6 +66,19 @@ class AuthController {
     }
   }
 
+  Future<void> restPassword() async {
+    final ProgressDialog pr = ProgressDialog(context);
+    await pr.show();
+    dynamic _result = await _auth.restPasswordByEmail(email.trim().toLowerCase());
+    await pr.hide();
+    if (_result is String) {
+      // If there is a issue with sign up
+      AlertDialogBox.showAlert(context, message: _result, locale: true);
+    } else {
+      replacePage(context, Wrapper.route);
+    }
+  }
+
   Future<void> updateUserInfo() async {
     final ProgressDialog pr = ProgressDialog(context);
     await pr.show();
