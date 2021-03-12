@@ -1,19 +1,18 @@
 import 'package:zships/auth/model/user.dart';
 import 'package:zships/auth/view/update_api_key.dart';
-import 'package:zships/component/action_button.dart';
+import 'package:zships/component/diffuser.dart';
 import 'package:zships/constants/colors.dart';
-import 'package:zships/constants/decorations.dart';
 import 'package:zships/constants/fz_icons.dart';
 import 'package:zships/constants/helper_methods.dart';
-import 'package:zships/main.dart';
+import 'package:zships/home/component/home_appbar.dart';
 import 'package:zships/service/api/api_service.dart';
-import 'package:zships/service/shared_preferences.dart';
 import 'package:zships/settings/component/setting_card.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zships/settings/controller/setting_controller.dart';
+import 'package:zships/ship_engine/service/se_services.dart';
 
 class SettingView extends StatefulWidget {
   static const String route = 'SettingView';
@@ -34,33 +33,17 @@ class _SettingViewState extends State<SettingView> {
   @override
   Widget build(BuildContext context) {
     controller.user = Provider.of<User>(context);
-    return Padding(
-      padding: EdgeInsets.only(top: 20),
-      child: Scaffold(
-        backgroundColor: kTransparent,
-        appBar: AppBar(
-          centerTitle: false,
-          automaticallyImplyLeading: false,
-          backgroundColor: kTransparent,
-          elevation: 0,
-          title: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Text(getText(context, 'settings'), style: kTitle.copyWith(color: kFontsColor)),
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Center(
-                child: ActionButton(
-                  title: MyApp.currentLocale.languageCode == 'ar' ? 'English' : 'العربية',
-                  onTap: () => AppSharedPreferences.instance.switchLocale(context),
-                ),
-              ),
-            ),
-          ],
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(20, 30, 20, 100),
+    return Scaffold(
+      backgroundColor: kTransparent,
+      appBar: CustomAppBar(
+        context,
+        title: 'Settings',
+        trailingIcon: false,
+        textStyle: TextStyle(fontSize: 30, color: kWhite),
+      ),
+      body: Diffuser(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 100),
           physics: BouncingScrollPhysics(),
           child: Column(
             children: <Widget>[
@@ -81,25 +64,45 @@ class _SettingViewState extends State<SettingView> {
                   titleColor: kRed0,
                   onTap: () => controller.logout(),
                 ),
-              // SettingCard(
-              //   title: getText(context, 'testApi'),
-              //   icon: FzIcons.privacy_policy,
-              //   onTap: () => ApiService.instance.createSampleShipment(Provider.of<User>(context, listen: false).apiKey),
-              // ),
-              // SettingCard(
-              //   title: getText(context, 'gettingShipments'),
-              //   icon: FzIcons.privacy_policy,
-              //   onTap: () => ApiService.instance.retrieveAllShipment(Provider.of<User>(context, listen: false).apiKey),
-              // ),
-              // SettingCard(
-              //   title: getText(context, 'gettingShipment'),
-              //   icon: FzIcons.privacy_policy,
-              //   onTap: () => ApiService.instance.retrieveShipment(Provider.of<User>(context, listen: false).apiKey),
-              // ),
+              SettingCard(
+                title: getText(context, 'testApi'),
+                icon: FzIcons.privacy_policy,
+                onTap: () => ApiService.instance.createSampleShipment(),
+              ),
+              SettingCard(
+                title: getText(context, 'Sample rate'),
+                icon: FzIcons.privacy_policy,
+                onTap: () => ApiService.instance.rateByShipmentId(),
+              ),
+              SettingCard(
+                title: getText(context, 'Getting Shipments'),
+                icon: FzIcons.privacy_policy,
+                onTap: () => ApiService.instance.fetchAllShipment(),
+              ),
+              SettingCard(
+                title: getText(context, 'Create label'),
+                icon: FzIcons.privacy_policy,
+                onTap: () => ApiService.instance.createLabel(),
+              ),
+              SettingCard(
+                title: getText(context, 'Estimate Rate'),
+                icon: FzIcons.privacy_policy,
+                onTap: () => ApiService.instance.estimateRate(),
+              ),
+              SettingCard(
+                title: getText(context, 'Track by label'),
+                icon: FzIcons.privacy_policy,
+                onTap: () => ShipEngineServices.instance.trackByLabelId('se-47032648'),
+              ),
+              SettingCard(
+                title: getText(context, 'Shipment Label'),
+                icon: FzIcons.privacy_policy,
+                onTap: () => ShipEngineServices.instance.getLabelByShipmentId(shipmentId: 'se-88294276').then((value) => print(value.first.labelId)),
+              ),
               // SettingCard(
               //   title: getText(context, 'helloF'),
               //   icon: FzIcons.privacy_policy,
-              //   onTap: () => ApiService.instance.buyShipment(Provider.of<User>(context, listen: false).apiKey),
+              //   onTap: () => ApiService.instance.buyShipment(),
               // ),
             ],
           ),
