@@ -4,15 +4,15 @@ import 'package:zships/component/icon_text.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/decorations.dart';
 import 'package:zships/constants/helper_methods.dart';
-import 'package:zships/constants/validate.dart';
-import 'package:zships/core/model/shipment.dart';
 import 'package:timeago/timeago.dart' as timeAgo;
+import 'package:zships/constants/validate.dart';
+import 'package:zships/main.dart';
+import 'package:zships/ship_engine/models/se_shipment.dart';
 import 'package:zships/shipments/view/shipment_view.dart';
-
-import '../../main.dart';
+import 'package:zships/constants/extensions.dart';
 
 class ShipmentCard extends StatelessWidget {
-  final Shipment shipment;
+  final ShipmentSE shipment;
 
   const ShipmentCard({Key key, this.shipment}) : super(key: key);
 
@@ -42,8 +42,8 @@ class ShipmentCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('${shipment.buyerAddress?.name ?? ''}', style: TextStyle(fontSize: 18)),
-                        Text('From: ${shipment.fromAddress?.name ?? ''}', style: kHintTS.copyWith(fontSize: 12)),
+                        Text('${shipment.shipTo?.name ?? ''}', style: TextStyle(fontSize: 18)),
+                        Text('From: ${shipment.shipFrom?.name ?? ''}', style: kHintTS.copyWith(fontSize: 12)),
                         SizedBox(height: 5),
                         // Text('From: ${shipment.fromAddress.name}', style: kHintTS.copyWith(fontSize: 12)),
                         // Text('From: ${shipment.updatedAt}', style: kHintTS.copyWith(fontSize: 12)),
@@ -51,15 +51,15 @@ class ShipmentCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            if (safeIsNotEmpty(shipment.createdAt))
-                              IconText(icon: Icons.access_time, text: timeAgo.format(DateTime.parse(shipment.createdAt), locale: MyApp.lang)),
+                            if (shipment.createdAt != null)
+                              IconText(icon: Icons.access_time, text: timeAgo.format(shipment.createdAt, locale: MyApp.lang)),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  if (safeListIsNotEmpty(shipment.rates))
-                    Text('${shipment.rates?.first?.carrier ?? ''}', style: TextStyle(fontSize: 10, color: Colors.black)),
+                  if (safeListIsNotEmpty(shipment.serviceCode))
+                    Text('${shipment.serviceCode.titleCase ?? ''}', style: TextStyle(fontSize: 10, color: Colors.black)),
                 ],
               ),
             ),
@@ -72,7 +72,7 @@ class ShipmentCard extends StatelessWidget {
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
                   boxShadow: kBoxShadow,
                 ),
-                child: Text('${shipment.status ?? ''}', style: TextStyle(fontSize: 10, color: Colors.white)),
+                child: Text('${shipment.shipmentStatus.titleCase ?? ''}', style: TextStyle(fontSize: 10, color: Colors.white)),
               ),
             ),
           ],
