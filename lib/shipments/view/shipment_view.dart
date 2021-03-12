@@ -52,12 +52,7 @@ class _ShipmentViewState extends State<ShipmentView> {
             Text('Created At: ${shipment.createdAt.toUtc().toString().split(' ').first}',
                 style: TextStyle(fontWeight: FontWeight.w600, color: kDark3)),
             if (!safeIsNotEmpty(shipment.labels))
-              RoundedButton(
-                  title: 'Get Label',
-                  onTap: () async {
-                    await controller.getLabel();
-                    setState(() {});
-                  }),
+              RoundedButton(title: 'Get Label', onTap: () async => controller.getLabel().then((value) => setState(() {}))),
             if (safeIsNotEmpty(shipment.labels)) Divider(color: kFontsColor),
             if (safeIsNotEmpty(shipment.labels))
               Titled(title: 'Label', largeTitle: true, child: Image.network(shipment.labels.first.labelDownload.png))

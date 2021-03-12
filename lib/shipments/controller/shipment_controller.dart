@@ -21,7 +21,7 @@ class ShipmentController {
       await pr.hide();
       if ((e as String).contains('Error'))
         AlertDialogBox.showAlert(context, message: e.toString());
-      else if (await AlertDialogBox.showAssertionDialog(context, message: e.toString(), continueButton: 'Create')) createLabel();
+      else if (await AlertDialogBox.showAssertionDialog(context, message: e.toString(), continueButton: 'Create')) await createLabel();
       return;
     }
     log(shipment.labels.first.trackingNumber);

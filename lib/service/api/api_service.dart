@@ -36,34 +36,14 @@ class ApiService {
       return await ShipEngineServices.instance.fetchAllShipment();
   }
 
-  // createLabel() async {
-  //   assert(key != null);
-
-  //   var headers = {
-  //     'API-Key': key,
-  //     'Content-Type': 'application/json',
-  //   };
-  //   var data = '{ "label_format":"pdf", "label_layout": "4x6", "label_download_type": "url" }';
-  //   var res = await http.post('https://api.shipengine.com/v1/labels/shipment/se-88294503', headers: headers, body: data);
-  //   print('http.post error: statusCode= ${res.statusCode}');
-  //   log(res.body);
-  // }
-
-  createSampleShipment(String shipment) async {
+  createShipment(String shipment) async {
     assert(key != null);
-
-    var headers = {
-      'API-Key': key,
-      'Content-Type': 'application/json',
-    };
-
-    // var data =
-    //     '{ "shipments": [ { "validate_address": "no_validation", "service_code": "usps_priority_mail", "external_shipment_id": "1daa0c22-0519-46d0-8653-9f3dc62e7d2c", "ship_to": { "name": "Amanda Miller", "phone": "555-555-5555", "address_line1": "525 S Winchester Blvd", "city_locality": "San Jose", "state_province": "CA", "postal_code": "95128", "country_code": "US", "address_residential_indicator": "yes" }, "ship_from": { "company_name": "Example Corp.", "name": "John Doe", "phone": "111-111-1111", "address_line1": "4009 Marathon Blvd", "address_line2": "Suite 300", "city_locality": "Austin", "state_province": "TX", "postal_code": "78756", "country_code": "US", "address_residential_indicator": "no" }, "confirmation": "none", "advanced_options": {}, "insurance_provider": "none", "tags": [], "packages": [ { "weight": { "value": 1.0, "unit": "ounce" } } ] } ] }';
-
-    var res = await http.post('https://api.shipengine.com/v1/shipments', headers: headers, body: shipment);
-    print('http.post error: statusCode= ${res.statusCode}');
-    // print(res.body);
-    log(res.body);
+    if (provider.isShipEngine)
+      return await ShipEngineServices.instance.createShipment(shipment: shipment);
+    else if (provider.isEasyPost)
+      return await ShipEngineServices.instance.createShipment(shipment: shipment);
+    else
+      return await ShipEngineServices.instance.createShipment(shipment: shipment);
   }
 
   // sampleRate(String fromZipCode, String toZipCode) async {

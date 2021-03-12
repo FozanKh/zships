@@ -178,6 +178,19 @@ class ShipEngineServices {
     }
   }
 
+  Future<void> createShipment({String shipment}) async {
+    assert(key != null ? true : getKey(), 'Key is not available');
+    var headers = {'API-Key': key, 'Content-Type': 'application/json'};
+
+    http.Response res = await http.post('https://api.shipengine.com/v1/shipments', headers: headers, body: shipment);
+
+    if (await validateResponse(res)) {
+      log(res.body);
+    } else {
+      throw ('Error, could create this shipment');
+    }
+  }
+
   Future<bool> validateResponse(http.Response res) async {
     log('Response status code = ${res.statusCode}');
     if (await checkConnection() == false) throw ('Please check your internet connection and try again');

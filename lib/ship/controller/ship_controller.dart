@@ -44,9 +44,9 @@ class ShipController {
       await pr.show();
 
       try {
-        json = _createJson(fromName.text, fromPhone.text, fromStateCode.text, fromPostalCode.text, toName.text, toPhone.text, fromStateCode.text,
+        json = _createJson(fromName.text, fromPhone.text, fromStateCode.text, fromPostalCode.text, toName.text, toPhone.text, toStateCode.text,
             toPostalCode.text, weight.text);
-        await ApiService.instance.createSampleShipment(jsonEncode(json));
+        await ApiService.instance.createShipment(jsonEncode(json));
         clearFields();
         await pr.hide();
         AlertDialogBox.showAlert(context, message: 'Shipment Created Successfully!');
@@ -104,14 +104,14 @@ class ShipController {
   }
 
   void clearFields() {
-    fromName.clear();
-    toName.clear();
-    fromStateCode.clear();
-    toStateCode.clear();
-    fromPostalCode.clear();
-    toPostalCode.clear();
-    fromPhone.clear();
-    toPhone.clear();
-    weight.clear();
+    // fromName.clear();
+    // toName.clear();
+    // fromStateCode.clear();
+    // toStateCode.clear();
+    // fromPostalCode.clear();
+    // toPostalCode.clear();
+    // fromPhone.clear();
+    // toPhone.clear();
+    // weight.clear();
   }
 }
