@@ -27,7 +27,6 @@ class _TrackByLabelIdState extends State<TrackByLabelId> {
       child: Column(
         children: [
           Titled(
-            // TODO: Translate these
             title: getText(context, 'Label ID'),
             child: RoundedTextField(
               fillColor: kLight2,

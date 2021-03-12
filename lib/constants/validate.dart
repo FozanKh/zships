@@ -66,6 +66,7 @@ String errorMessage(ValidationErrorType type) {
   }
 }
 
+// Auth Message control
 bool showErrorMessage(String value, ValidationErrorType type) {
   if (type == ValidationErrorType.email) {
     if (value.length > 6 && value.contains('@')) {

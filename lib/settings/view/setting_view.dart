@@ -5,14 +5,12 @@ import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/fz_icons.dart';
 import 'package:zships/constants/helper_methods.dart';
 import 'package:zships/home/component/home_appbar.dart';
-import 'package:zships/service/api/api_service.dart';
 import 'package:zships/settings/component/setting_card.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zships/settings/controller/setting_controller.dart';
-import 'package:zships/ship_engine/service/se_services.dart';
 
 class SettingView extends StatefulWidget {
   static const String route = 'SettingView';

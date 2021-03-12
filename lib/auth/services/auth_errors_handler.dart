@@ -1,5 +1,5 @@
 import 'package:zships/constants/extensions.dart';
-
+// Translating FireAuth error codes to valid english
 String authErrorsHandler(String errorCode) {
   String errorMessage;
   switch ("ERROR_" + errorCode.toUpperCase().replaceAll("-", "_")) {

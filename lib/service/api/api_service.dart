@@ -9,6 +9,7 @@ extension ApiProviderHelper on ApiProvider {
   bool get isEasyPost => this == ApiProvider.EasyPost;
 }
 
+/// this class the used as a wrapper to the actual API service, which will enable the support for multiple APIs
 class ApiService {
   static ApiService _instance;
 
@@ -25,7 +26,7 @@ class ApiService {
 
   fetchAllShipment() async {
     assert(key != null);
-
+    // Will be customized when supporting multiple APIs
     if (provider.isShipEngine)
       return await ShipEngineServices.instance.fetchAllShipment();
     else if (provider.isEasyPost)
@@ -36,6 +37,7 @@ class ApiService {
 
   createShipment(String shipment) async {
     assert(key != null);
+    // Will be customized when supporting multiple APIs
     if (provider.isShipEngine)
       return await ShipEngineServices.instance.createShipment(shipment: shipment);
     else if (provider.isEasyPost)
@@ -46,7 +48,7 @@ class ApiService {
 
   rateByShipmentId({String shipmentId}) async {
     assert(key != null);
-
+    // Will be customized when supporting multiple APIs
     if (provider.isShipEngine)
       return await ShipEngineServices.instance.rateByShipmentId(shipmentId: shipmentId);
     else if (provider.isEasyPost)
@@ -55,8 +57,7 @@ class ApiService {
       return await ShipEngineServices.instance.rateByShipmentId(shipmentId: shipmentId);
   }
 
-  // Change this to list of dynamic or a generic Rate model, in order to support multiple APIs
-  Future<List<RateSE>> estimateRate({String fromPostalCode = '11564', String toPostalCode = '24230', String weight = '5.0'}) async {
+  Future<List<RateSE>> estimateRate({String fromPostalCode, String toPostalCode, String weight}) async {
     assert(key != null, 'Key is not available');
     // Will be customized when supporting multiple APIs
     if (provider.isShipEngine)

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zships/component/bounce.dart';
 import 'package:zships/component/icon_text.dart';
-import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/decorations.dart';
 import 'package:zships/constants/helper_methods.dart';
 import 'package:timeago/timeago.dart' as timeAgo;

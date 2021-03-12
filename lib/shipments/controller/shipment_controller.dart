@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:zships/component/alertDialog.dart';
 import 'package:zships/component/progress_indicator.dart';
@@ -24,7 +23,6 @@ class ShipmentController {
       else if (await AlertDialogBox.showAssertionDialog(context, message: e.toString(), continueButton: 'Create')) await createLabel();
       return;
     }
-    log(shipment.labels.first.trackingNumber);
     return;
   }
 
@@ -38,7 +36,6 @@ class ShipmentController {
       await pr.hide();
       AlertDialogBox.showAlert(context, message: e.toString());
     }
-    log(shipment.labels?.first?.trackingNumber ?? '');
     return;
   }
 }

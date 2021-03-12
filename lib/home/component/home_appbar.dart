@@ -4,6 +4,7 @@ import 'package:zships/auth/model/user.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/localization/constants.dart';
 
+// ignore: must_be_immutable
 class CustomAppBar extends PreferredSize {
   final double height;
   final String title;
