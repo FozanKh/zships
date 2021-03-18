@@ -1,4 +1,6 @@
+import 'package:zships/service/cloud_functions.dart';
 import 'package:zships/ship_engine/models/rate/se_rate.dart';
+import 'package:zships/ship_engine/models/se_shipment.dart';
 import 'package:zships/ship_engine/models/track/shipment_track.dart';
 import 'package:zships/ship_engine/service/se_services.dart';
 
@@ -24,8 +26,22 @@ class ApiService {
   ApiProvider provider = ApiProvider.ShipEngine;
   String key;
 
-  fetchAllShipment() async {
-    assert(key != null);
+  Future<void> getApiKey() async {
+    key = await CloudFunctions.instance.getApiKey();
+    setProviderKey();
+  }
+
+  void setProviderKey() {
+    if (provider.isShipEngine)
+      ShipEngineServices.instance.getKey();
+    else if (provider.isEasyPost)
+      ShipEngineServices.instance.getKey();
+    else
+      ShipEngineServices.instance.getKey();
+  }
+
+  Future<List<ShipmentSE>> fetchAllShipment() async {
+    assert(key != null, 'Key is not available!');
     // Will be customized when supporting multiple APIs
     if (provider.isShipEngine)
       return await ShipEngineServices.instance.fetchAllShipment();
@@ -35,8 +51,8 @@ class ApiService {
       return await ShipEngineServices.instance.fetchAllShipment();
   }
 
-  createShipment(String shipment) async {
-    assert(key != null);
+  Future<void> createShipment(String shipment) async {
+    assert(key != null, 'Key is not available!');
     // Will be customized when supporting multiple APIs
     if (provider.isShipEngine)
       return await ShipEngineServices.instance.createShipment(shipment: shipment);
@@ -46,8 +62,8 @@ class ApiService {
       return await ShipEngineServices.instance.createShipment(shipment: shipment);
   }
 
-  rateByShipmentId({String shipmentId}) async {
-    assert(key != null);
+  Future<List<RateSE>> rateByShipmentId({String shipmentId}) async {
+    assert(key != null, 'Key is not available!');
     // Will be customized when supporting multiple APIs
     if (provider.isShipEngine)
       return await ShipEngineServices.instance.rateByShipmentId(shipmentId: shipmentId);
