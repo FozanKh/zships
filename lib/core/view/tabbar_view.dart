@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:zships/auth/model/user.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/home/component/home_fab.dart';
 import 'package:zships/home/view/home_view.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:zships/service/api/api_service.dart';
-import 'package:zships/service/database.dart';
 import 'package:zships/settings/view/setting_view.dart';
 import 'package:zships/ship/view/ship_view.dart';
 import 'package:zships/track/view/track_view.dart';
@@ -42,18 +39,14 @@ class _TabBarScreenState extends State<TabBarScreen> {
     _shipPage = ShipView();
     _pages = [_homePage, _shipPage, Container(), _trackingPage, _settingsPage];
     _currentIndex = 0;
-    getKey();
+    ApiService.instance.getApiKey();
     super.initState();
-  }
-
-  getKey() async {
-    String key = await DatabaseService.instance.getUserKey(newUid: Provider.of<User>(context, listen: false).uid);
-    ApiService.instance.key = key;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {},
       child: Scaffold(
         floatingActionButton: HomeFAB(),
