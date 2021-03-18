@@ -31,11 +31,43 @@ class ShipEngineServices {
     return safeIsNotEmpty(key);
   }
 
+  Future<List<ShipmentSE>> fetchDynamicShipment(String pageSize, String page) async {
+    assert(key != null ? true : getKey(), 'Key is not available');
+    var headers = {'API-Key': key};
+
+    var params = {
+      'page': '$page',
+      'page_size': '$pageSize',
+      'sort_dir': 'desc',
+      'sort_by': 'created_at',
+    };
+    var query = params.entries.map((p) => '${p.key}=${p.value}').join('&');
+
+    http.Response res = await http.get('${ApiEndPoints.instance.seBaseUrl}shipments?$query', headers: headers);
+
+    if (await validateResponse(res)) {
+      Map<String, dynamic> result = jsonDecode(res.body);
+      List<ShipmentSE> shipments = [];
+      if (result.isNotEmpty) {
+        result['shipments'].forEach((v) {
+          shipments.add(ShipmentSE.fromMap(v));
+        });
+        log(res.body);
+        return shipments;
+      } else {
+        throw ('No Shipments linked to this account');
+      }
+    } else {
+      throw ('Error, could not get shipments, try again later');
+    }
+  }
+
   Future<List<ShipmentSE>> fetchAllShipment() async {
     assert(key != null ? true : getKey(), 'Key is not available');
     var headers = {'API-Key': key};
 
     http.Response res = await http.get('${ApiEndPoints.instance.seBaseUrl}shipments', headers: headers);
+
     if (await validateResponse(res)) {
       Map<String, dynamic> result = jsonDecode(res.body);
       List<ShipmentSE> shipments = [];
