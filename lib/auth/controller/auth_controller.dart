@@ -7,6 +7,8 @@ import 'package:zships/component/progress_indicator.dart';
 import 'package:zships/constants/helper_methods.dart';
 import 'package:zships/constants/validate.dart';
 import 'package:zships/core/wrapper.dart';
+import 'package:zships/service/api/api_service.dart';
+import 'package:zships/service/cloud_functions.dart';
 import 'package:zships/service/database.dart';
 import 'package:zships/service/shared_preferences.dart';
 
@@ -82,16 +84,11 @@ class AuthController {
   Future<void> updateUserInfo() async {
     final ProgressDialog pr = ProgressDialog(context);
     await pr.show();
-    print(apiKey.length);
-    if (safeIsNotEmpty(apiKey)) await DatabaseService.instance.updateUserKey(newUid: FirebaseAuth.instance.currentUser.uid, key: apiKey.trim());
+    if (safeIsNotEmpty(apiKey)) CloudFunctions.instance.setApiKey(apiKey.trim());
+    await ApiService.instance.getApiKey();
+    // await DatabaseService.instance.updateUserKey(newUid: FirebaseAuth.instance.currentUser.uid, key: apiKey.trim());
     await pr.hide();
     popPage(context);
-  }
-
-  Future<void> getApiKey() async {
-    String key = await DatabaseService.instance.getUserKey(newUid: FirebaseAuth.instance.currentUser.uid);
-    print('retrieved key: $key');
-    AppSharedPreferences.instance.saveKey(key);
   }
 
   clear() {
