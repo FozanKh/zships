@@ -7,13 +7,12 @@ import 'package:zships/ship_engine/models/se_shipment.dart';
 
 class HomeController {
   final BuildContext context;
-  final State client;
   bool _shipmentsLoaded = false;
   List<ShipmentSE> allShipments = [];
   List<ShipmentSE> filteredShipments = [];
   bool get shipmentsLoaded => _shipmentsLoaded;
 
-  HomeController(this.context, this.client) {
+  HomeController(this.context) {
     _shipmentsLoaded = safeListIsNotEmpty(allShipments);
     filteredShipments.addAll(allShipments);
   }
@@ -26,8 +25,6 @@ class HomeController {
       _shipmentsLoaded = true;
       filteredShipments.clear();
       filteredShipments.addAll(allShipments);
-      // ignore: invalid_use_of_protected_member
-      client.setState(() {});
       if (force) await pr.hide();
     } catch (e) {
       if (force) await pr.hide();
@@ -41,7 +38,7 @@ class HomeController {
     }
   }
 
-  void search(String value) {
+  Future<void> search(String value) async {
     filteredShipments.clear();
     if (safeIsNotEmpty(value)) {
       print('searching');
@@ -54,7 +51,6 @@ class HomeController {
     } else {
       filteredShipments.addAll(allShipments);
     }
-    // ignore: invalid_use_of_protected_member
-    client.setState(() {});
+    return;
   }
 }

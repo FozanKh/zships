@@ -3,6 +3,7 @@ import 'package:zships/component/diffuser.dart';
 import 'package:zships/component/rounded_button.dart';
 import 'package:zships/component/rounded_text_field.dart';
 import 'package:zships/constants/colors.dart';
+import 'package:zships/constants/decorations.dart';
 import 'package:zships/home/component/home_appbar.dart';
 import 'package:zships/ship_engine/models/se_shipment.dart';
 import 'package:zships/shipments/component/shipment_card.dart';
@@ -19,7 +20,7 @@ class _HomeViewState extends State<HomeView> {
   HomeController controller;
   @override
   void initState() {
-    controller = HomeController(context, this);
+    controller = HomeController(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.loadShipments().then((x) => setState(() {}));
     });
@@ -40,6 +41,7 @@ class _HomeViewState extends State<HomeView> {
                         Text(getText(context, 'No Shipments Loaded'), textAlign: TextAlign.center, style: TextStyle(fontSize: 24, color: kDark4)),
                         SizedBox(height: 50),
                         RoundedButton(title: 'Load Shipments', buttonColor: kButtonColor, onTap: () => controller.loadShipments(force: true)),
+                        kProgressIndicator,
                       ],
                     )
                   : Text(getText(context, 'No Shipments on Your Account'),
@@ -53,16 +55,14 @@ class _HomeViewState extends State<HomeView> {
                     hint: getText(context, 'Names or Track number'),
                     margin: EdgeInsets.only(top: 10),
                     trailingIcon: Icons.search,
-                    onChanged: controller.search,
+                    onChanged: (value) => controller.search(value).then((_) => setState(() {})),
                   ),
                 ),
                 if (controller.filteredShipments.length > 0)
                   Expanded(
                     child: Diffuser(
                       child: RefreshIndicator(
-                        onRefresh: () {
-                          return controller.loadShipments();
-                        },
+                        onRefresh: () => controller.loadShipments().then((_) => setState(() {})),
                         child: ListView.builder(
                           padding: EdgeInsets.fromLTRB(15, 0, 15, 100),
                           itemCount: controller.filteredShipments.length,
