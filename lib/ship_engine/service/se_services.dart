@@ -35,7 +35,7 @@ class ShipEngineServices {
     assert(key != null ? true : getKey(), 'Key is not available');
     var headers = {'API-Key': key};
 
-    http.Response res = await http.get('https://api.shipengine.com/v1/shipments', headers: headers);
+    http.Response res = await http.get('${ApiEndPoints.instance.seBaseUrl}shipments', headers: headers);
     if (await validateResponse(res)) {
       Map<String, dynamic> result = jsonDecode(res.body);
       List<ShipmentSE> shipments = [];

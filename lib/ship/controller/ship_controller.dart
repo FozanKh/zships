@@ -57,17 +57,7 @@ class ShipController {
     }
   }
 
-  Map<String, dynamic> _createJson(
-    fromName,
-    fromPhone,
-    fromStateCode,
-    fromPostalCode,
-    toName,
-    toPhone,
-    toStateCode,
-    toPostalCode,
-    weight,
-  ) {
+  Map<String, dynamic> _createJson(fromName, fromPhone, fromStateCode, fromPostalCode, toName, toPhone, toStateCode, toPostalCode, weight) {
     return {
       "shipments": [
         {
@@ -104,14 +94,14 @@ class ShipController {
   }
 
   void clearFields() {
-    // fromName.clear();
-    // toName.clear();
-    // fromStateCode.clear();
-    // toStateCode.clear();
-    // fromPostalCode.clear();
-    // toPostalCode.clear();
-    // fromPhone.clear();
-    // toPhone.clear();
-    // weight.clear();
+    fromName.clear();
+    toName.clear();
+    fromStateCode.clear();
+    toStateCode.clear();
+    fromPostalCode.clear();
+    toPostalCode.clear();
+    fromPhone.clear();
+    toPhone.clear();
+    weight.clear();
   }
 }
