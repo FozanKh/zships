@@ -5,7 +5,6 @@ import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/fz_icons.dart';
 import 'package:zships/constants/helper_methods.dart';
 import 'package:zships/home/component/home_appbar.dart';
-import 'package:zships/service/api/api_service.dart';
 import 'package:zships/settings/component/setting_card.dart';
 import 'package:zships/localization/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,12 +62,6 @@ class _SettingViewState extends State<SettingView> {
                   titleColor: kRed0,
                   onTap: () => controller.logout(),
                 ),
-              SettingCard(
-                title: getText(context, 'testing'),
-                navigate: false,
-                color: kLight2,
-                onTap: () => ApiService.instance.getApiKey(),
-              ),
             ],
           ),
         ),
