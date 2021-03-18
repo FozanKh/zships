@@ -51,7 +51,10 @@ class TrackController {
       await pr.hide();
     } catch (e) {
       await pr.hide();
-      AlertDialogBox.showAlert(context, message: e.toString());
+      if (e is AssertionError)
+        AlertDialogBox.showAlert(context, message: e.message);
+      else
+        AlertDialogBox.showAlert(context, message: e.toString());
     }
     return;
   }
@@ -69,7 +72,10 @@ class TrackController {
       await pr.hide();
     } catch (e) {
       await pr.hide();
-      AlertDialogBox.showAlert(context, message: e.toString());
+      if (e is AssertionError)
+        AlertDialogBox.showAlert(context, message: e.message);
+      else
+        AlertDialogBox.showAlert(context, message: e.toString());
     }
     return;
   }

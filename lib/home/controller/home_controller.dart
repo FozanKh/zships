@@ -5,7 +5,6 @@ import 'package:zships/constants/validate.dart';
 import 'package:zships/service/api/api_service.dart';
 import 'package:zships/ship_engine/models/se_shipment.dart';
 
-// ignore: invalid_use_of_protected_member
 class HomeController {
   final BuildContext context;
   final State client;
@@ -18,21 +17,24 @@ class HomeController {
     _shipmentsLoaded = safeListIsNotEmpty(allShipments);
     filteredShipments.addAll(allShipments);
   }
-
   Future<void> loadShipments({bool force = false}) async {
     ProgressDialog pr = ProgressDialog(context);
     if (force) await pr.show();
     try {
-      if (ApiService.instance.key == null) await Future.delayed(Duration(seconds: 2));
+      if (ApiService.instance.key == null) await Future.delayed(Duration(seconds: 5));
       allShipments = await ApiService.instance.fetchAllShipment();
       _shipmentsLoaded = true;
       filteredShipments.clear();
       filteredShipments.addAll(allShipments);
+      // ignore: invalid_use_of_protected_member
       client.setState(() {});
       if (force) await pr.hide();
     } catch (e) {
       if (force) await pr.hide();
-      AlertDialogBox.showAlert(context, message: e.toString());
+      if (e is AssertionError)
+        AlertDialogBox.showAlert(context, message: e.message);
+      else
+        AlertDialogBox.showAlert(context, message: e.toString());
     }
     if (!safeListIsNotEmpty(allShipments)) {
       if (await checkConnection() == false) AlertDialogBox.showAlert(context, message: "Please check your internet and try again");
@@ -52,6 +54,7 @@ class HomeController {
     } else {
       filteredShipments.addAll(allShipments);
     }
+    // ignore: invalid_use_of_protected_member
     client.setState(() {});
   }
 }

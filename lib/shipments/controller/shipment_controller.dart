@@ -18,6 +18,10 @@ class ShipmentController {
       await pr.hide();
     } catch (e) {
       await pr.hide();
+      if (e is AssertionError)
+        AlertDialogBox.showAlert(context, message: e.message);
+      else
+        AlertDialogBox.showAlert(context, message: e.toString());
       if ((e as String).contains('Error'))
         AlertDialogBox.showAlert(context, message: e.toString());
       else if (await AlertDialogBox.showAssertionDialog(context, message: e.toString(), continueButton: 'Create')) await createLabel();
