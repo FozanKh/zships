@@ -4,11 +4,8 @@ class CloudFunctions {
   static CloudFunctions _instance;
 
   static CloudFunctions get instance {
-    if (_instance == null) {
-      _instance = CloudFunctions();
-      return _instance;
-    } else
-      return _instance;
+    if (_instance == null) _instance = CloudFunctions();
+    return _instance;
   }
 
   // getting the ApiKey through a cloud function to have it decrypted first

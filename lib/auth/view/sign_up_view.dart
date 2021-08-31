@@ -148,6 +148,7 @@ class _SignUpViewState extends State<SignUpView> {
               ),
             ),
           )
+        
         ],
       ),
     );
