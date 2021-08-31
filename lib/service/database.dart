@@ -17,6 +17,7 @@ class DatabaseService {
   final FirebaseCollections collections = FirebaseCollections();
   DatabaseService({this.uid});
 
+
   setValues({String uid}) {
     uid = uid;
   }
