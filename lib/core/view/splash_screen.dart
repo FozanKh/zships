@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:zships/component/animations/showUp.dart';
 import 'package:zships/constants/colors.dart';
 import 'package:zships/constants/decorations.dart';
