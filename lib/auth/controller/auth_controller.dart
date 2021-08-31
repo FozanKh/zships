@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zships/auth/services/auth.dart';
 import 'package:zships/auth/view/update_api_key.dart';
@@ -9,8 +8,6 @@ import 'package:zships/constants/validate.dart';
 import 'package:zships/core/wrapper.dart';
 import 'package:zships/service/api/api_service.dart';
 import 'package:zships/service/cloud_functions.dart';
-import 'package:zships/service/database.dart';
-import 'package:zships/service/shared_preferences.dart';
 
 class AuthController {
   final BuildContext context;
